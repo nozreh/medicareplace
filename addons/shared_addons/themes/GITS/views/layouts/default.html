@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<!-- edited by @rothattack -->
+<link href='http://fonts.googleapis.com/css?family=Alef' rel='stylesheet' type='text/css'>
+<head>
+    {{ theme:partial name="metadata"}}
+</head>
+<body>
+    <!-- Navigation group="header" set to navbar-inverse -->
+    {{ theme:partial name="navbar" }}
+
+    <!-- Main Content -->
+    <div class="row">
+        {{ template:body }}
+    </div>
+
+    <!-- Footer -->
+    <div class="row">
+        <div class="container">
+            {{ theme:partial name="footer" }}
+        </div>
+    </div>
+
+    {{ integration:analytics }}
+</body>
+</html>

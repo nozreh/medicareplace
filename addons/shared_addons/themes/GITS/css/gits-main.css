@@ -1,0 +1,181 @@
+/* 
+    Document   : git-main
+    Created on : Jun 4, 2013, 10:50:06 AM
+    Author     : Robert Roth
+    Description:
+        main style for the GITS MedicarePlace theme for PyroCMS.
+*/
+
+root { 
+    display: block;
+}
+*{
+    position: relative;
+    font-family: 'Alef', sans-serif;
+}
+body{
+    background:#def;
+}
+.container{
+    width: 960px;
+    margin: 0 auto;
+}
+nav{
+    background: #0099cc;
+    min-height: 60px;
+    color: #FFFFFF;
+    border-bottom: 1px #0055aa solid;
+}
+nav .nav-inner li{
+    float: left;
+    transition: .5s;
+}
+nav li{
+    padding: 22px 0px 15px 0px;
+    min-height: 26px;
+    min-width: 90px;
+    max-width: 90x;
+    list-style-type: none;
+    border-right: 1px solid #0077bb;
+    border-left: 1px solid #22aaee;
+    text-align: center;
+}
+nav a{
+    color: #FFF;
+}
+nav a:hover{
+    color: #FFF;
+}
+.top-nav a:hover{
+    text-decoration: none;
+}
+.main-logo{
+    float:left;
+    height: 63px;
+    width: 210px;
+    background: url('./../images/main-logo.png') no-repeat;
+    border-right: 1px solid #0077bb;
+    transition: .5s;
+    cursor: pointer;
+    border-left: solid 1px #5cf;
+}
+.main-logo:hover{
+    background: url('./../images/main-logo.png') no-repeat #00aadd;
+}
+nav li:hover{
+    background: #00aadd;
+    cursor: pointer;
+}
+.drop-down-menu{
+    background: #0099cc;    
+    visibility: hidden;
+    position: absolute;
+    top: 120%;
+    right: 0;
+    height: auto;
+    opacity: 0;
+    transition: 0.5s;
+    border-right: 1px solid #0077bb;
+    z-index: 1;
+}
+.drop-down-menu li{
+    border: none;
+    border-bottom: 1px solid #0077bb;
+    box-shadow: -1px 0px 0px #22aaee;
+}
+.settings:hover .drop-down-menu{
+    visibility: visible;
+    top: 101%;
+    opacity: 1;
+}
+/* main body styles */
+.main-body{
+    height: 450px;
+    width: 100%;
+    background: url('./../images/body-bg.jpg') no-repeat;
+    background-size: cover;
+    border-bottom: #555 solid 10px;
+}
+.big-logo{
+    position: relative;
+    float: right;
+    top: 20px;
+    width: 296px;
+    height: 392px;
+    background: url('./../images/big-logo.png') no-repeat center;
+}
+/* form styles */
+.form-container{
+    top: 80px;
+    left: 100px;
+    min-width: 200px;
+    width: 420px;
+    height: 50px;
+}
+input.zip-box{
+    float: left;
+    padding: 15px;
+    width: 200px;
+    border-radius: 0;
+    font-size: 1.3em;
+    border: solid 8px #555;
+    border-radius: 10px 0 0 10px;
+}
+input.zip-box:focus{
+    box-shadow: none;
+    border: solid 8px #5cf;
+}
+input.zip-box:focus>button.zip-submit{
+    border: solid 8px #5cf;
+}
+button.zip-submit{
+    float: left;
+    padding: 23px 23px;
+    background: #0c9;
+    color: #fff;
+    border-left: none;
+    border-radius: 0 10px 10px 0;
+    transition: .5s;
+    border: none;
+    font-size: 1.2em;
+}
+button.zip-submit:hover{
+    background: #09c;
+}
+.radio-box{
+    float: left;
+    height: 80px;
+    width: 221px;
+    background: url('./../images/zip-bg.png') center no-repeat;
+    font-size: 1.2em;
+    color: #fff;
+}
+input.radio{
+    margin-left: 20px;
+    margin-right: 5px;
+}
+div.first{
+    margin-top: 25px;
+}
+div.form-container h1{
+    font-size: 4em;
+    color: #fff;
+    text-shadow: -1px 2px 0px #555;
+}
+div.form-container p{
+    color: #fff;
+    text-shadow: -1px 1px 0px #555;
+    font-size: 1.2em;
+}
+.footer-ul{
+    float: right;
+    list-style: none;
+}
+.footer-ul li{
+    float: left;
+    margin-left: 10px;
+}
+.footer-ul a:hover{
+    background: none;
+    text-decoration: underline;
+}

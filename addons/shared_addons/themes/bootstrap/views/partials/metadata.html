@@ -1,0 +1,22 @@
+<!-- Meta data -->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+{{ template:metadata }}
+<title>{{ settings:site_name }} &bull; {{ template:title }}</title>
+
+
+<!-- Guess we better help IE out -->
+<!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+    
+<!-- CSS Stylesheets -->
+{{ theme:css file="bootstrap.min.css" }}
+{{ theme:css file="bootstrap-responsive.min.css" }}
+
+{{ if theme:options:include_nav_fix == 'yes' }}
+	{{ theme:css file="nav-fix.css" }}
+{{ endif }}
+
+<!--  JavaScript -->
+{{ theme:js file="jquery-1.8.1.min.js" }}
+{{ theme:js file="bootstrap.min.js" }}    

@@ -1,0 +1,26 @@
+<nav>
+    <div class="nav-inner container">
+        <a href='http://www.medicareforidiots.com/'><div class="main-logo" title="Home"></div></a>
+        <ul class="top-nav">
+            {{ navigation:links group="header" }}
+            {{ if user:logged_in }}
+            <li class="drop-down settings" style='float: right;'>
+                {{ user:display_name }}
+                <ul class="drop-down-menu">
+                    {{ if settings:enable_profiles }}
+                    <a href="{{ url:site uri="my-profile" }}"><li>View Profile</li></a>
+                    <a href="{{ url:site uri="edit-profile" }}"><li>{{ helper:lang line="edit_profile_label" }}</li></a>
+                    {{ endif }}
+                    {{ if user:has_cp_permissions }}
+                    <a href="{{ url:site uri="admin" }}" target="_blank"><li>{{ helper:lang line="global:control-panel" }}</li></a>
+                    <a href="{{ url:site uri="users/logout" }}"><li>{{ helper:lang line="logout_label" }}</li></a>
+                    {{ endif }}
+                </ul>
+            </li>
+            {{ else }}
+            <a href="{{ url:site }}users/login"><li>{{ helper:lang line="user_login_header" }}</li></a>
+            <a href="{{ url:site }}register"><li>{{ helper:lang line="user_register_title" }}</li></a>
+            {{ endif }}
+        </ul>
+    </div>
+</nav>

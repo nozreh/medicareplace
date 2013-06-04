@@ -1,0 +1,62 @@
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed'); ?>
+
+ERROR - 2013-05-11 04:46:03 --> Query error: Unknown column 'medicare_rates.campany_id' in 'on clause'
+ERROR - 2013-05-11 04:46:20 --> The filetype you are attempting to upload is not allowed.
+ERROR - 2013-05-11 04:46:21 --> Query error: Unknown column 'medicare_rates.campany_id' in 'on clause'
+ERROR - 2013-05-11 06:59:01 --> Query error: Unknown column 'medicare_rates.campany_id' in 'on clause'
+ERROR - 2013-05-11 06:59:04 --> Query error: Unknown column 'medicare_rates.campany_id' in 'on clause'
+ERROR - 2013-05-11 06:59:06 --> Query error: Unknown column 'medicare_rates.campany_id' in 'on clause'
+ERROR - 2013-05-11 07:03:12 --> Query error: Unknown column 'medicare_rates.campany_id' in 'on clause'
+ERROR - 2013-05-11 07:03:24 --> Query error: Unknown column 'medicare_rates.campany_id' in 'on clause'
+ERROR - 2013-05-11 07:04:23 --> Query error: Unknown column 'medicare_rates.campany_id' in 'on clause'
+ERROR - 2013-05-11 07:04:25 --> Query error: Unknown column 'medicare_rates.campany_id' in 'on clause'
+ERROR - 2013-05-11 07:04:28 --> Query error: Unknown column 'medicare_rates.campany_id' in 'on clause'
+ERROR - 2013-05-11 07:08:42 --> Query error: Unknown column 'medicare_rates.campany_id' in 'on clause'
+ERROR - 2013-05-11 07:08:45 --> Query error: Unknown column 'medicare_rates.campany_id' in 'on clause'
+ERROR - 2013-05-11 07:08:53 --> Query error: Unknown column 'medicare_rates.campany_id' in 'on clause'
+ERROR - 2013-05-11 07:09:50 --> Query error: Unknown column 'medicare_rates.campany_id' in 'on clause'
+ERROR - 2013-05-11 07:09:56 --> Query error: Unknown column 'medicare_rates.campany_id' in 'on clause'
+ERROR - 2013-05-11 07:10:06 --> Query error: Unknown column 'medicare_rates.campany_id' in 'on clause'
+ERROR - 2013-05-11 07:10:18 --> Query error: Unknown column 'medicare_rates.campany_id' in 'on clause'
+ERROR - 2013-05-11 07:11:28 --> Query error: Unknown column 'medicare_rates.campany_id' in 'on clause'
+ERROR - 2013-05-11 07:12:59 --> Query error: Unknown column 'medicare_rates.campany_id' in 'on clause'
+ERROR - 2013-05-11 07:13:34 --> Query error: Unknown column 'medicare_rates.campany_id' in 'on clause'
+ERROR - 2013-05-11 07:34:22 --> Query error: Unknown column 'medicare_rates.campany_id' in 'on clause'
+ERROR - 2013-05-11 07:44:02 --> Query error: Unknown column 'medicare_rates.campany_id' in 'on clause'
+ERROR - 2013-05-11 07:44:03 --> Query error: Unknown column 'medicare_rates.campany_id' in 'on clause'
+ERROR - 2013-05-11 07:44:13 --> Query error: Unknown column 'medicare_rates.campany_id' in 'on clause'
+ERROR - 2013-05-11 07:44:14 --> Query error: Unknown column 'medicare_rates.campany_id' in 'on clause'
+ERROR - 2013-05-11 07:58:05 --> Query error: Unknown column 'medicare_rates.campany_id' in 'on clause'
+ERROR - 2013-05-11 07:58:20 --> The filetype you are attempting to upload is not allowed.
+ERROR - 2013-05-11 07:58:21 --> Query error: Unknown column 'medicare_rates.campany_id' in 'on clause'
+ERROR - 2013-05-11 07:58:29 --> The filetype you are attempting to upload is not allowed.
+ERROR - 2013-05-11 07:58:30 --> Query error: Unknown column 'medicare_rates.campany_id' in 'on clause'
+ERROR - 2013-05-11 07:58:35 --> The filetype you are attempting to upload is not allowed.
+ERROR - 2013-05-11 07:58:36 --> Query error: Unknown column 'medicare_rates.campany_id' in 'on clause'
+ERROR - 2013-05-11 08:40:36 --> The filetype you are attempting to upload is not allowed.
+ERROR - 2013-05-11 08:40:38 --> Query error: Unknown column 'medicare_rates.campany_id' in 'on clause'
+ERROR - 2013-05-11 08:41:05 --> The filetype you are attempting to upload is not allowed.
+ERROR - 2013-05-11 08:41:06 --> Query error: Unknown column 'medicare_rates.campany_id' in 'on clause'
+ERROR - 2013-05-11 08:41:54 --> The filetype you are attempting to upload is not allowed.
+ERROR - 2013-05-11 08:41:55 --> Query error: Unknown column 'medicare_rates.campany_id' in 'on clause'
+ERROR - 2013-05-11 08:46:13 --> Query error: Unknown column 'medicare_rates.campany_id' in 'on clause'
+ERROR - 2013-05-11 08:46:14 --> Query error: Unknown column 'medicare_rates.campany_id' in 'on clause'
+ERROR - 2013-05-11 08:46:19 --> Query error: Unknown column 'medicare_rates.campany_id' in 'on clause'
+ERROR - 2013-05-11 08:46:19 --> Query error: Unknown column 'medicare_rates.campany_id' in 'on clause'
+ERROR - 2013-05-11 08:46:24 --> Query error: Unknown column 'medicare_rates.campany_id' in 'on clause'
+ERROR - 2013-05-11 08:57:14 --> The filetype you are attempting to upload is not allowed.
+ERROR - 2013-05-11 08:57:15 --> Query error: Unknown column 'medicare_rates.campany_id' in 'on clause'
+ERROR - 2013-05-11 08:57:22 --> The filetype you are attempting to upload is not allowed.
+ERROR - 2013-05-11 08:57:23 --> Query error: Unknown column 'medicare_rates.campany_id' in 'on clause'
+ERROR - 2013-05-11 09:05:06 --> Query error: Unknown column 'medicare_rates.campany_id' in 'on clause'
+ERROR - 2013-05-11 09:05:15 --> Query error: Unknown column 'medicare_rates.campany_id' in 'on clause'
+ERROR - 2013-05-11 09:05:30 --> Query error: Unknown column 'medicare_rates.campany_id' in 'on clause'
+ERROR - 2013-05-11 09:16:31 --> Query error: Unknown column 'medicare_rates.campany_id' in 'on clause'
+ERROR - 2013-05-11 09:16:56 --> Query error: Unknown column 'medicare_rates.campany_id' in 'on clause'
+ERROR - 2013-05-11 09:17:03 --> Query error: Unknown column 'medicare_rates.campany_id' in 'on clause'
+ERROR - 2013-05-11 09:45:38 --> Query error: Unknown column 'medicare_rates.campany_id' in 'on clause'
+ERROR - 2013-05-11 09:45:45 --> Query error: Unknown column 'medicare_rates.campany_id' in 'on clause'
+ERROR - 2013-05-11 09:46:07 --> Query error: Unknown column 'medicare_rates.campany_id' in 'on clause'
+ERROR - 2013-05-11 09:46:13 --> Query error: Unknown column 'medicare_rates.campany_id' in 'on clause'
+ERROR - 2013-05-11 09:46:45 --> Query error: Unknown column 'medicare_rates.campany_id' in 'on clause'
+ERROR - 2013-05-11 09:46:46 --> Query error: Unknown column 'medicare_rates.campany_id' in 'on clause'
