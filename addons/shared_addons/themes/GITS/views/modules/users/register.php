@@ -1,5 +1,5 @@
+<div class="container">
 <h2 class="page-title" id="page_title"><?php echo lang('user_register_header') ?></h2>
-
 <p>
 	<span id="active_step"><?php echo lang('user_register_step1') ?></span> -&gt;
 	<span><?php echo lang('user_register_step2') ?></span>
@@ -28,8 +28,7 @@
 		<input type="text" name="username" maxlength="100" value="<?php echo set_value('username'); ?>" />
 
 	<?php endif; ?>
-	
-
+                
 	<label for="email"><?php echo lang('user_email') ?></label>
 	<input type="text" name="email" maxlength="100" value="<?php echo set_value('email'); ?>" />
 
@@ -40,3 +39,4 @@
     </div>
 
 <?php echo form_close(); ?>
+</div>

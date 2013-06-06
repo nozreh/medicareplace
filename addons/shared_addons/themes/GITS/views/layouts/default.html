@@ -10,7 +10,14 @@
 
     <!-- Main Content -->
     <div class="row">
+    {{ if  page:is_home }}
         {{ template:body }}
+    {{ else }}
+    <div class="container">
+        {{ template:body }}
+    </div>
+    
+    {{ endif }}
     </div>
 
     <!-- Footer -->

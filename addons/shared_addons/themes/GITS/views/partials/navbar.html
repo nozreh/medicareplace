@@ -2,7 +2,6 @@
     <div class="nav-inner container">
         <a href='http://www.medicareforidiots.com/'><div class="main-logo" title="Home"></div></a>
         <ul class="top-nav">
-            {{ navigation:links group="header" }}
             {{ if user:logged_in }}
             <li class="drop-down settings" style='float: right;'>
                 {{ user:display_name }}

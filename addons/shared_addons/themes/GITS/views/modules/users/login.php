@@ -1,5 +1,5 @@
+<div class="container">
 <h2 class="page-title" id="page_title"><?php echo lang('user_login_header') ?></h2>
-
 <?php if (validation_errors()): ?>
 <div class="alert alert-error">
 	<button type="button" class="close" data-dismiss="alert">×</button>
@@ -25,3 +25,4 @@
 
 
 <?php echo form_close(); ?>
+</div>

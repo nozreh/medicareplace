@@ -1,5 +1,5 @@
+<div class="container"> 
 <h2 class="page-title"><?php echo lang('user_reset_password_title');?></h2>
-
 <?php if(!empty($error_string)):?>
 	<div class="alert-message error">
 		<?php echo $error_string;?>
@@ -29,3 +29,4 @@
 	<?php echo form_close(); ?>
 	
 <?php endif; ?>
+</div>

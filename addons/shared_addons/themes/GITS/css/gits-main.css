@@ -128,7 +128,7 @@ input.zip-box:focus{
 input.zip-box:focus>button.zip-submit{
     border: solid 8px #5cf;
 }
-button.zip-submit{
+.zip-submit{
     float: left;
     padding: 23px 23px;
     background: #0c9;
@@ -139,8 +139,10 @@ button.zip-submit{
     border: none;
     font-size: 1.2em;
 }
-button.zip-submit:hover{
+.zip-submit:hover{
     background: #09c;
+    color: #fff;
+    text-decoration: none;
 }
 .radio-box{
     float: left;
