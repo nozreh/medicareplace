@@ -28,7 +28,7 @@ class medicare_data_importer_m extends MY_Model {
 			->join('company', 'rates.company_id = company.id')
 			->join('plan', 'rates.plan_id = plan.id');
 
-		$this->db->order_by('rates.created_on', 'DESC');
+		$this->db->order_by('rates.created_on', 'ASC');
 
 		return $this->db->get('rates')->result();
 	}
@@ -39,7 +39,7 @@ class medicare_data_importer_m extends MY_Model {
 		$this->db->select('company.*');
                 $this->db->where('company.status', 1);
 
-		$this->db->order_by('company.id', 'DESC');
+		$this->db->order_by('company.id', 'ASC');
 
 		return $this->db->get('company')->result();
 	}
@@ -111,10 +111,10 @@ class medicare_data_importer_m extends MY_Model {
 		$to_insert = array(
 			'plan_id' => $input['plan_id'],
 			'company_id' => $input['company_id'],
-                        'gender' => $input['gender'],
                         'zipcode' => (string)$input['zipcode'],
                         'preference' => $input['preference'],
                         'age' => $input['age'],
+                        'segment' => $input['segment'],
                         'amount' => $input['amount'],
                         'addon_amount' => $input['addon_amount'],
                         'remarks' => $input['remarks'],
@@ -135,10 +135,10 @@ class medicare_data_importer_m extends MY_Model {
 		$to_insert = array(
 			'plan_id' => $input['plan_id'],
 			'company_id' => $input['company_id'],
-                        'gender' => $input['gender'],
                         'zipcode' => (string)$input['zipcode'],
                         'preference' => $input['preference'],
                         'age' => $input['age'],
+                        'segment' => $input['segment'],
                         'amount' => $input['amount'],
                         'addon_amount' => $input['addon_amount'],
                         'remarks' => $input['remarks'],

@@ -23,6 +23,7 @@ class plan extends Public_Controller
 		$this->plan = 'plan';	
 		$this->load->library('form_validation');
 		$this->load->model('plan_m');
+                $this->load->model('medicare_data_importer/medicare_data_importer_m');
 		$this->load->helper('util');
 		$this->load->helper('form');
 		$this->lang->load('plan');
@@ -47,7 +48,7 @@ class plan extends Public_Controller
 		$this->session->unset_userdata('user_info');
                 $this->session->unset_userdata('zipcode_details');
                 $this->session->unset_userdata('age_bracket');
-                $this->session->unset_userdata('plan_option');
+                $this->session->unset_userdata('segment');
                 print 'nothing here';
                 //redirect();
 	}
@@ -60,7 +61,7 @@ class plan extends Public_Controller
                 $user_info = $this->session->userdata('user_info');
                 $zipcode_details = $this->session->userdata('zipcode_details');
                 $age_bracket = $this->session->userdata('age_bracket');
-                $plan_option = $this->session->userdata('plan_option');
+                $segment = $this->session->userdata('segment');
                 $this->form_validation->set_rules($this->config->item('validation_register'));
                 $data = array();
                 $applicant = array();
@@ -68,14 +69,14 @@ class plan extends Public_Controller
                 if(!valued($zipcode_details)) {redirect();} //if user havent selected age and zipcode
                 
                 
-                if($plan_option == 2) //if user try to cheat the url
+                if($segment == 2) //if user try to cheat the url
                 {
                     redirect('/plan/register_individual?demographic='.$age_bracket);
                 }
                 
                 //get info from ajax session
                 $data['age_bracket'] = $age_bracket;
-                $data['plan_option'] = $plan_option;
+                $data['segment'] = $segment;
                 $data['zip_code'] = $zipcode_details['zip_code'];
                 $data['state'] = $zipcode_details['state'];
                 $data['city'] = $zipcode_details['city'];
@@ -93,7 +94,7 @@ class plan extends Public_Controller
                     {
                             //Let Rock n' Roll
                             $applicant = array( 'age_bracket' => $data['age_bracket'],
-                                                'plan_option' => $data['plan_option'],
+                                                'segment' => $data['segment'],
                                                 'gender' => $data['gender'],
                                                 'birth_date' => mdate('%Y%m%d', strtotime($data['birth_date'])),
                                                 'preference' => $data['preference'],
@@ -150,7 +151,7 @@ class plan extends Public_Controller
                 $user_info = $this->session->userdata('user_info');
                 $zipcode_details = $this->session->userdata('zipcode_details');
                 $age_bracket = $this->session->userdata('age_bracket');
-                $plan_option = $this->session->userdata('plan_option');
+                $segment = $this->session->userdata('segment');
                 $this->form_validation->set_rules($this->config->item('validation_individual'));
                 $data = array();
                 $dependants = array();
@@ -159,14 +160,14 @@ class plan extends Public_Controller
                if(!valued($zipcode_details)) {redirect();} //if user havent selected age and zipcode
                 
                 
-                if($plan_option == 1) //if user try to cheat the url
+                if($segment == 1) //if user try to cheat the url
                 {
                     redirect('/plan/register?demographic='.$age_bracket);
                 }
                 
                 //get info from ajax session
                 $data['age_bracket'] = $age_bracket;
-                $data['plan_option'] = $plan_option;
+                $data['segment'] = $segment;
                 $data['zip_code'] = $zipcode_details['zip_code'];
                 $data['state'] = $zipcode_details['state'];
                 $data['city'] = $zipcode_details['city'];
@@ -248,7 +249,7 @@ class plan extends Public_Controller
                             //Let Rock n' Roll
                             $applicant = $dependants['applicant'];
                             $applicant = array( 'age_bracket' => $data['age_bracket'],
-                                                'plan_option' => $data['plan_option'],
+                                                'segment' => $data['segment'],
                                                 'gender' => $applicant['gender'],
                                                 'birth_date' => mdate('%Y%m%d', strtotime($applicant['birth_date'])),
                                                 'preference' => $applicant['preference'],
@@ -312,13 +313,41 @@ class plan extends Public_Controller
             if(!valued($user_info)){ redirect();}
             $zipcode_details = $this->session->userdata('zipcode_details');
             $age_bracket = $this->session->userdata('age_bracket');
-            $plan_option = $this->session->userdata('plan_option');
-           
+            $segment = $this->session->userdata('segment');
+            
+            $company_list = $this->medicare_data_importer_m->get_all_companies();
+            $plan_list = $this->medicare_data_importer_m->get_all_plans();
+            
+            $base_where = array();
+            //add post values to base_where if f_module is posted
+            $base_where = $this->input->post('f_company') ? $base_where + array('company_id' => $this->input->post('f_company')) : $base_where;
+
+            $base_where = $this->input->post('f_plan') ? $base_where + array('plan_id' => $this->input->post('f_plan')) : $base_where;
+
+            // Create pagination links
+            $total_rows = $this->plan_m->count_by($base_where);
+            $pagination = create_pagination('plan/select', $total_rows);
+
+            // Using this data, get the relevant results
+            $rates = $this->plan_m->limit($pagination['limit'])->get_many_by($base_where);
+
+            //do we need to unset the layout because the request is ajax?
+            $this->input->is_ajax_request() ? $this->template->set_layout(FALSE) : '';
+
             $this->template
-			->title('Personal Info')
-			->set('zipcode_details', $zipcode_details)
-                        ->set('error_string',$error_string)
-			->build('select_plan', $user_info);
+                    ->title($this->module_details['name'])
+                    ->set('zipcode_details', $zipcode_details)
+                    ->set('error_string',$error_string)
+                    ->set('user_info', $user_info)
+                    ->set('pagination', $pagination)
+                    ->set('company_list', $company_list)
+                    ->set('plan_list', $plan_list)
+                    ->set('rates', $rates);
+            
+
+            $this->input->is_ajax_request()
+                    ? $this->template->build('tables/posts')
+                    : $this->template->build('select_plan');
             
         }
         
@@ -327,16 +356,16 @@ class plan extends Public_Controller
 	{
 		$valid_zipcode = Events::trigger('zipcode_checker',array('zip_code' => $this->input->post('zip_code')));
 		$age_bracket = $this->input->post('age_bracket');
-                $plan_option = $this->input->post('plan_option');
+                $segment = $this->input->post('segment');
                 
                 $this->session->set_userdata('age_bracket', $age_bracket); //0=below 64 , 1=above 64
-                $this->session->set_userdata('plan_option', $plan_option); //false = no selected option, 0=parts A-B, 1=individual plans
+                $this->session->set_userdata('segment', $segment); //-1 = no selected option, 0=parts A-B, 1=individual plans
                
 		if( $valid_zipcode )
 		{
 			$data['result'] = TRUE;
                         $data['age_bracket'] = $age_bracket;
-                        $data['plan_option'] = $plan_option;
+                        $data['segment'] = $segment;
                         
 		}
 		else
@@ -347,55 +376,47 @@ class plan extends Public_Controller
 		
 		echo json_encode($data);
 	}
-	
-	public function ajax_register()
-	{
-		
-		$this->form_validation->set_rules($this->validation_rules);
-		$m_data = array();
-		
-		// check if the form validation passed
-		if($this->form_validation->run())
-		{
-			
-			$details = array(
-                                        'uid' => $this->uid, 
-                                        'age_range' => $this->input->post('age_range'),
-                                        'gender' => $this->input->post('gender'),
-                                        'first_name' => $this->input->post('first_name'),
-                                        'last_name' => $this->input->post('last_name'),
-                                        'email' => $this->input->post('email'),
-                                        'newsletter' => $this->input->post('newsletter'),
-                                        'branch' => $this->input->post('branch')
-                                        );
+        
+        public function ajax_filter()
+        {
+            $company = $this->input->post('f_company');
+            $plan = $this->input->post('f_plan');
+            //$keywords = $this->input->post('f_keywords');
 
-				
-			if($this->plan_m->set_participant($details)) 
-			{
-				$m_data['success'] = true;
-				$m_data['message'] = lang('plan:message:register_success');
-					
-			}
-			else{
-				
-					$m_data['success'] = false;
-					$m_data['message'] = lang('plan:message:register_failed');
-				
-			}
-		}else{
-			
-			$m_data['success'] = false;
-			$m_data['message'] = $this->form_validation->error_string();
-		}
-		
-		echo json_encode($m_data);
-		
-	}
+            $post_data = array();
+
+            if ( $plan != 0)
+            {
+                $post_data['plan_id'] = $plan;
+            }
+
+            if ($category != 0)
+            {
+                $post_data['company_id'] = $company;
+            }
+
+            //keywords, lets explode them out if they exist
+            /*if ($keywords)
+            {
+                $post_data['keywords'] = $keywords;
+            }*/
+            
+            $results = $this->plan_m->search($post_data);
+
+            //set the layout to false and load the view
+            $this->template
+                ->set_layout(FALSE)
+                ->set('rates', $results)
+                ->build('tables/posts');
+        }
+	
+	
         
         public function _reset_sessions()
         {
             $this->session->set_userdata('zipcode_details',NULL);
             $this->session->set_userdata('age_bracket', NULL);
+            $this->session->set_userdata('segment', NULL);
         }
 	
 	

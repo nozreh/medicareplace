@@ -15,6 +15,18 @@
 
 <!--  JavaScript -->
 {{ theme:js file="jquery-1.8.1.min.js" }}
+{{ theme:js file="jquery-1.8.1.min.js" }}
 {{ theme:js file="bootstrap.min.js" }}
 {{ theme:js file="jquery.lightbox_me.js" }}
 {{ theme:js file="bootstrap-datepicker.js" }}
+
+
+ {{ if { url:segments segment="2" } == 'select' }}
+   {{ theme:js file="jquery-ui.min.js" }}
+   {{ theme:js file="jquery.cooki.js" }}
+   {{ theme:js file="plugins.js" }}
+   {{ theme:js file="scripts.js" }}
+   {{ theme:js file="filter.js" }}
+        
+ {{ endif }}
+

@@ -42,6 +42,12 @@
 		<div class="input">
 		<?php echo form_input("email", set_value("email", $company->email)); ?>
 		</div>
+		</li>
+                <li>
+		<label for="email">Website</label>
+		<div class="input">
+		<?php echo form_input("website", set_value("website", $company->website)); ?>
+		</div>
 		</li><li>
 		<label for="status">Status</label>
 		<div class="input">

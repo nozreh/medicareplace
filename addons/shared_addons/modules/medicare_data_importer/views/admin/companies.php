@@ -14,6 +14,7 @@
                 <th>Status</th>
                 <th>Address</th>
                 <th>Email</th>
+                <th>Website</th>
                 <th>Contact</th>
                 <th></th>
                 <th>Action</th>
@@ -47,6 +48,9 @@
                     </td>
                     <td>
 						<?php print $company->address;?>
+                    </td>
+                    <td>
+						<?php print $company->website;?>
                     </td>
                     <td>
 						<?php print $company->email;?>

@@ -27,7 +27,7 @@ class Module_Plan extends Module {
                                             `first_name` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '0',
                                             `last_name` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '0',
                                             `age_bracket` tinyint(2) NOT NULL DEFAULT '0',
-                                            `plan_option` tinyint(2) NOT NULL DEFAULT '0' COMMENT 'this is for younger than 64 1=Enrolled in Parts A or B | 2=register individual plan',
+                                            `segment` tinyint(2) NOT NULL DEFAULT '0' COMMENT '0= Age below 64 but disabled or Above 64 | 1 = Age below 64 Individual Plan',
                                             `zip_code` varchar(10) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '0',
                                             `address` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
                                             `city` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '0',

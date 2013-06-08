@@ -21,16 +21,6 @@
 		<?php print form_dropdown('company_id', $companies, $rate->company_id); ?>
 		</div>
 		</li><li>
-		<label for="gender"><?php echo lang('medicare_data_importer:gender'); ?></label>
-		<div class="input">
-                 <?php 
-                      $male = FALSE; $female = FALSE;
-                      if(strtolower($rate->gender) == 'male')$male = TRUE;else $female = TRUE;
-                  ?>
-		<label for="gender">Male</label> <input type="radio" name="gender" value="male" <?php echo set_radio('gender', 'male', $male); ?> />
-                <label for="gender">Female</label> <input type="radio" name="gender" value="female" <?php echo set_radio('gender', 'female', $female); ?> />  
-		</div>
-		</li><li>
 		<label for="zipcode"><?php echo lang('medicare_data_importer:zipcodes'); ?></label>
 		<div class="input">
 		<?php echo form_input("zipcode", set_value("zipcode", $rate->zipcode)); ?> Separated by colon(:)

@@ -2,7 +2,7 @@
 
 class Module_medicare_data_importer extends Module {
 
-	public $version = '1.0';
+	public $version = '1.1';
 
 	public function info()
 	{
@@ -67,10 +67,10 @@ class Module_medicare_data_importer extends Module {
 					  	`id` int(11) NOT NULL AUTO_INCREMENT,
                                                 `plan_id` int(11) NOT NULL,
                                                 `company_id` int(11) NOT NULL,
-                                                `gender` varchar(10) NOT NULL,
                                                 `zipcode` text NOT NULL,
                                                 `preference` int(2) NOT NULL,
                                                 `age` smallint(3) NOT NULL,
+                                                `segment` TINYINT( 2 ) NOT NULL DEFAULT  '0' COMMENT  '0 = Age below 64 Disabled or Older than 64 | 1= Age below 64 Individual Plan'
                                                 `amount` decimal(10,2) NOT NULL,
                                                 `addon_amount` decimal(10,2) NOT NULL,
                                                 `remarks` text,
@@ -82,7 +82,7 @@ class Module_medicare_data_importer extends Module {
 		
 		$medicare_plan = "CREATE TABLE IF NOT EXISTS " . $this->db->dbprefix('plan') ." (
 					  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-					  `slug` varchar(100) NOT NULL,
+					  `code` varchar(30) NOT NULL,
 					  `name` varchar(100) NOT NULL,
 					  `status` int(2) NOT NULL COMMENT '0=Inactive, 1=Active',
                                           `basic_benefits` int(2) NOT NULL COMMENT '0=No, 1=Yes',
@@ -99,11 +99,12 @@ class Module_medicare_data_importer extends Module {
 		
 		$medicare_company = "CREATE TABLE IF NOT EXISTS " . $this->db->dbprefix('company') ." (
                                             `id` int(11) NOT NULL AUTO_INCREMENT,
-                                            `slug` varchar(100) NOT NULL,
+                                            `code` varchar(30) NOT NULL,
                                             `name` varchar(100) NOT NULL,
                                             `address` text NULL,
                                             `contact` varchar(25) NULL,
                                             `email` varchar(50) NULL,
+                                            `website` text NULL,
                                             `status` int(2) NOT NULL,
                                             `created_on` int(11) NOT NULL,
                                             `updated_on` int(11) NOT NULL,
@@ -136,7 +137,6 @@ class Module_medicare_data_importer extends Module {
 	public function uninstall()
 	{
 		$this->dbforge->drop_table('rates');
-		
                 $this->dbforge->drop_table('plan');
 		/*$this->dbforge->drop_table('company');
                 $this->dbforge->drop_table('zipcode');

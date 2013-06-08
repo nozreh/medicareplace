@@ -89,10 +89,10 @@ class Admin extends Admin_Controller
                                                     $data = array(
                                                     'plan_id' => $this->medicare_data_importer_m->get_plan_by_code($row[0])->id,
                                                     'company_id' => $this->medicare_data_importer_m->get_company_by_code($row[1])->id,
-                                                    'gender' => trim($row[2]),
-                                                    'zipcode' => trim($row[3]),
-                                                    'preference' => $row[4],
-                                                    'age' => $row[5],
+                                                    'zipcode' => trim($row[2]),
+                                                    'preference' => $row[3],
+                                                    'age' => $row[4],
+                                                    'segment' => $row[5],
                                                     'amount' => $row[6],
                                                     'addon_amount' => $row[7],
                                                     'remarks' => $row[8],
@@ -156,10 +156,10 @@ class Admin extends Admin_Controller
                         $m_data = array(
                                 'plan_id' => $this->input->post('plan_id'),
                                 'company_id' => $this->input->post('company_id'),
-                                'gender' => $this->input->post('gender'),
                                 'zipcode' => $this->input->post('zipcode'),
                                 'preference' => $this->input->post('preference'),
                                 'age' => $this->input->post('age'),
+                                'segment' => $this->input->post('segment'),
                                 'amount' => $this->input->post('amount'),
                                 'addon_amount' => $this->input->post('addon_amount'),
                                 'remarks' => $this->input->post('remarks'),
@@ -221,10 +221,10 @@ class Admin extends Admin_Controller
                         $m_data = array(
                                 'plan_id' => $this->input->post('plan_id'),
                                 'company_id' => $this->input->post('company_id'),
-                                'gender' => $this->input->post('gender'),
                                 'zipcode' => $this->input->post('zipcode'),
                                 'preference' => $this->input->post('preference'),
                                 'age' => $this->input->post('age'),
+                                'segment' => $this->input->post('segment'),
                                 'amount' => $this->input->post('amount'),
                                 'addon_amount' => $this->input->post('addon_amount'),
                                 'remarks' => $this->input->post('remarks'),
@@ -294,6 +294,7 @@ class Admin extends Admin_Controller
                             'address' => $this->input->post('address'),
                             'contact' => $this->input->post('contact'),
                             'email' => $this->input->post('email'),
+                            'website' => $this->input->post('website'),
                             'status' => $this->input->post('status'),
 
                             );
@@ -350,6 +351,7 @@ class Admin extends Admin_Controller
                             'address' => $this->input->post('address'),
                             'contact' => $this->input->post('contact'),
                             'email' => $this->input->post('email'),
+                            'website' => $this->input->post('website'),
                             'status' => $this->input->post('status'),
 
                             );

@@ -10,10 +10,10 @@
 		<tr>
                 <th>Company</th>
                 <th>Plan</th>
-                <th>Gender</th>
                 <th>Zip Codes</th>
                 <th  width="10%">Preference</th>
                 <th>Age</th>
+                <th>Segment</th>
                 <th>Price</th>
                 <th>Misc</th>
                 <th>Date <br />(H:m:s)</th>
@@ -41,10 +41,6 @@
                                 <?php print $rate->plan_name; ?>
                         </td>
                         <td>
-                                <?php print $rate->gender; ?>
-                        </td>
-                        
-                        <td>
                                 <?php print $rate->zipcode; ?>
                         </td>
 
@@ -55,6 +51,11 @@
                         <td>
                                 <?php $age = $rate->age < 65 ? 'Below 65' : $rate->age;
                                       print $age;
+                                ?>
+                        </td>
+                        <td>
+                                <?php $segment = $rate->segment == 0 ? 'A' : 'B';
+                                      print $segment;
                                 ?>
                         </td>
                         <td>
