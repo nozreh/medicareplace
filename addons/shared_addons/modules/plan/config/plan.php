@@ -19,8 +19,8 @@ $config['validation_register'] =  array(
 			),
                         array(
 				'field' => 'birth_date',
-				'label' => 'Start Date for coverage',
-				'rules' => 'trim|required'
+				'label' => 'Birth Date',
+				'rules' => 'required|trim|required|callback_birth_date_check'
 			),
                         array(
 				'field' => 'gender',
@@ -72,6 +72,7 @@ $config['validation_register'] =  array(
 
 $config['validation_individual'] =  array(
 			
+                        
                         array(
 				'field' => 'zip_code',
 				'label' => 'Zip Code',

@@ -27,7 +27,7 @@ class Admin extends Admin_Controller
 		// Set the validation rules see config > validation_rules.php
 		$this->rate_rules = $this->config->item('rate_validation');
                 $this->company_rules = $this->config->item('company_validation');
-                $this->plan_rules = $this->config->item('plan_validation');
+                $this->plan_type_rules = $this->config->item('plan_type_validation');
 
 		// We'll set the partials and metadata here since they're used everywhere
 		$this->template->append_js('module::admin.js')
@@ -83,11 +83,12 @@ class Admin extends Admin_Controller
 
                                         foreach($rows as $id => $row)
                                         {
+                                               
                                                 if($id > 0)
                                                 {
                                                     
                                                     $data = array(
-                                                    'plan_id' => $this->medicare_data_importer_m->get_plan_by_code($row[0])->id,
+                                                    'plan_type_id' => $this->medicare_data_importer_m->get_plan_type_by_code($row[0])->id,
                                                     'company_id' => $this->medicare_data_importer_m->get_company_by_code($row[1])->id,
                                                     'zipcode' => trim($row[2]),
                                                     'preference' => $row[3],
@@ -103,9 +104,12 @@ class Admin extends Admin_Controller
                                                     
                                                     if(!$new_rate_id) //Make sure we successfully added new record
                                                     {
-                                                        $this->session->set_flashdata('error', 'Unable to read file please verify the format!');
+                                                        $this->session->set_flashdata('error', 'Unable to add record, or record already exist!');
                                                         exit();
                                                         
+                                                    }else{
+                                                        $this->session->set_flashdata('success', $new_rate_id); //if exists just update it
+                                                        continue;     
                                                     }
 
                                                 }
@@ -140,9 +144,9 @@ class Admin extends Admin_Controller
         {
             	$data = array();
                 $companies_data = $this->medicare_data_importer_m->get_all_companies();
-                $plans_data = $this->medicare_data_importer_m->get_all_plans();
+                $plans_data = $this->medicare_data_importer_m->get_all_plan_types();
                 $campanies = array(); foreach($companies_data as $company) { $companies[$company->id] = $company->name; }
-                $plans = array(); foreach($plans_data as $plan) { $plans[$plan->id] = $plan->name; }
+                $plan_types = array(); foreach($plans_data as $plan_type) { $plan_types[$plan_type->id] = $plan_type->name; }
                 
                 $this->form_validation->set_rules($this->rate_rules);
 		$m_data = array();
@@ -154,7 +158,7 @@ class Admin extends Admin_Controller
                     {
 
                         $m_data = array(
-                                'plan_id' => $this->input->post('plan_id'),
+                                'plan_type_id' => $this->input->post('plan_type_id'),
                                 'company_id' => $this->input->post('company_id'),
                                 'zipcode' => $this->input->post('zipcode'),
                                 'preference' => $this->input->post('preference'),
@@ -188,7 +192,7 @@ class Admin extends Admin_Controller
                 
                 } 
                 
-                $data['plans'] = $plans;
+                $data['plan_types'] = $plan_types;
                 $data['companies'] = $companies;
             
                     $this->template
@@ -203,9 +207,9 @@ class Admin extends Admin_Controller
                 $data = array();
             	$rate = $this->medicare_data_importer_m->get_rate_by_id($rate_id);
                 $companies_data = $this->medicare_data_importer_m->get_all_companies();
-                $plans_data = $this->medicare_data_importer_m->get_all_plans();
+                $plans_data = $this->medicare_data_importer_m->get_all_plan_types();
                 $campanies = array(); foreach($companies_data as $company) { $companies[$company->id] = $company->name; }
-                $plans = array(); foreach($plans_data as $plan) { $plans[$plan->id] = $plan->name; }
+                $plan_types = array(); foreach($plans_data as $plan_type) { $plan_types[$plan_type->id] = $plan_type->name; }
                 
                 $this->form_validation->set_rules($this->rate_rules);
 		$m_data = array();
@@ -219,7 +223,7 @@ class Admin extends Admin_Controller
                     {
 
                         $m_data = array(
-                                'plan_id' => $this->input->post('plan_id'),
+                                'plan_type_id' => $this->input->post('plan_type_id'),
                                 'company_id' => $this->input->post('company_id'),
                                 'zipcode' => $this->input->post('zipcode'),
                                 'preference' => $this->input->post('preference'),
@@ -254,7 +258,7 @@ class Admin extends Admin_Controller
                 }
                 
                 $data['rate'] = $rate;
-                $data['plans'] = $plans;
+                $data['plan_types'] = $plan_types;
                 $data['companies'] = $companies;
             
                     $this->template
@@ -409,22 +413,22 @@ class Admin extends Admin_Controller
         }
         
         
-        public function plan()
+        public function plan_types()
         {
-            $plans = $this->medicare_data_importer_m->get_all_plans();	
+            $plan_types = $this->medicare_data_importer_m->get_all_plan_types();	
             
             $this->template
-			->title($this->module_details['name'], lang('medicare_data_importer:plans'))
-                        ->set('active_section', 'plans')
-			->build('admin/plans',array(
-			'plans' => $plans));
+			->title($this->module_details['name'], 'Plan Types')
+                        ->set('active_section', 'plan_types')
+			->build('admin/plan_types',array(
+			'plan_types' => $plan_types));
 	
         }
         
-        public function create_plan()
+        public function create_plan_type()
         {
             	
-            $this->form_validation->set_rules($this->plan_rules);
+            $this->form_validation->set_rules($this->plan_type_rules);
             $m_data = array();
 
             // check if the form validation passed
@@ -436,21 +440,15 @@ class Admin extends Admin_Controller
                     $m_data = array(
                             'code' => $this->input->post('code'),
                             'name' => $this->input->post('name'),
-                            'status' => $this->input->post('status'),
-                            'basic_benefits' => $this->input->post('basic_benefits'),
-                            'skilled_nursing' => $this->input->post('skilled_nursing'),
-                            'part_b_excess' => $this->input->post('part_b_excess'),
-                            'part_a_deductible' => $this->input->post('part_a_deductible'),
-                            'part_b_deductible' => $this->input->post('part_b_deductible'),
-                            'foreign_travel' => $this->input->post('foreign_travel'),
+                            'segment' => $this->input->post('segment'),
                             );
 
-                            $result = $this->medicare_data_importer_m->set_plan($m_data);
+                            $result = $this->medicare_data_importer_m->set_plan_type($m_data);
 
                             if($result) //Make sure we successfully added new record
                             {
-                                $this->session->set_flashdata('success', 'Successfully created plan!');
-                                redirect('admin/medicare_data_importer/plan');        
+                                $this->session->set_flashdata('success', 'Successfully created Plan Type!');
+                                redirect('admin/medicare_data_importer/plan_types');        
                             }
                             else 
                             {
@@ -474,16 +472,16 @@ class Admin extends Admin_Controller
 			->append_js('module::slug.js')
         		->append_js('module::fields.js')
                         ->title($this->module_details['name'], lang('modules.add_title'))
-                        ->set('active_section', 'plans')
-			->build('admin/plan_form');
+                        ->set('active_section', 'plan_types')
+			->build('admin/plan_type_form');
 	
         }
         
-         public function edit_plan($plan_id = NULL)
+         public function edit_plan_type($plan_type_id = NULL)
         {
             
-            $plan = $this->medicare_data_importer_m->get_plan_by_id($plan_id);
-            $this->form_validation->set_rules($this->plan_rules);
+            $plan_type = $this->medicare_data_importer_m->get_plan_type_by_id($plan_type_id);
+            $this->form_validation->set_rules($this->plan_type_rules);
             $m_data = array();
 
             // check if the form validation passed
@@ -495,22 +493,15 @@ class Admin extends Admin_Controller
                     $m_data = array(
                             
                             'name' => $this->input->post('name'),
-                            'status' => $this->input->post('status'),
-                            'basic_benefits' => $this->input->post('basic_benefits'),
-                            'skilled_nursing' => $this->input->post('skilled_nursing'),
-                            'part_b_excess' => $this->input->post('part_b_excess'),
-                            'part_a_deductible' => $this->input->post('part_a_deductible'),
-                            'part_b_deductible' => $this->input->post('part_b_deductible'),
-                            'foreign_travel' => $this->input->post('foreign_travel'),
-
+                            'segment' => $this->input->post('segment'),
                             );
 
-                            $result = $this->medicare_data_importer_m->edit_company($plan_id,  $m_data);
+                            $result = $this->medicare_data_importer_m->edit_plan_type($plan_type_id,  $m_data);
 
                             if($result) //Make sure we successfully added new record
                             {
                                 $this->session->set_flashdata('success', 'Successfully updated company!');
-                                redirect('admin/medicare_data_importer/plans');        
+                                redirect('admin/medicare_data_importer/plan_types');        
                             }
                             else 
                             {
@@ -532,26 +523,26 @@ class Admin extends Admin_Controller
             
             $this->template
 			->title($this->module_details['name'], lang('modules.add_title'))
-                        ->set('active_section', 'plans')
-			->build('admin/plan_form', array('plan' => $plan));
+                        ->set('active_section', 'plan_types')
+			->build('admin/plan_type_form', array('plan_type' => $plan_type));
 	
         }
         
-        public function delete_plan($plan_id = NULL)
+        public function delete_plan_type($plan_type_id = NULL)
         {
             
             
-            $result = $this->medicare_data_importer_m->delete_plan($plan_id);
+            $result = $this->medicare_data_importer_m->delete_plan_type($plan_type_id);
 
             if($result) //Make sure we successfully added new record
             {
-                $this->session->set_flashdata('success', 'Successfully deleted plan!');
-                redirect('admin/medicare_data_importer/plan');        
+                $this->session->set_flashdata('success', 'Successfully deleted Plan Type!');
+                redirect('admin/medicare_data_importer/plan_type');        
             }
             else 
             {
                 $this->session->set_flashdata('error', 'Something went wrong please try again!');
-                redirect('admin/medicare_data_importer/plan');  
+                redirect('admin/medicare_data_importer/plan_type');  
 
             }
 

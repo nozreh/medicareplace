@@ -11,9 +11,9 @@
 
 			<ul class="fields">
 				<li>
-		<label for="plan_id"><?php echo lang('medicare_data_importer:plan'); ?></label>
+		<label for="plan_type_id">Plan Type</label>
 		<div class="input">
-		<?php print form_dropdown('plan_id', $plans, $rate->plan_id); ?>
+		<?php print form_dropdown('plan_type_id', $plan_types, $rate->plan_type_id); ?>
 		</div>
 		</li><li>
 		<label for="company_id"><?php echo lang('medicare_data_importer:company'); ?></label>

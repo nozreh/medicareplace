@@ -52,8 +52,8 @@ box-shadow:0 4px 12px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.5);
         Please select one from options below:
     </p></strong>
     <div class="pull-left">
-        <input type="radio" class="radio_plan" id="with_parts_plan" onclick="javascript: close_more_options(1);" name="more_option" value="1" > I am disabled and have (or will have) Medicare Parts A and B.<br />
-        <input type="radio" class="radio_plan" id="individual_plan" onclick="javascript: close_more_options(2);" name="more_option" value="2"> I want to shop for non-Medicare individual heath plans.<br /><br />
+        <input type="radio" class="radio_plan" id="with_parts_plan" onclick="javascript: close_more_options(0);" name="more_option" value="0" > I am disabled and have (or will have) Medicare Parts A and B.<br />
+        <input type="radio" class="radio_plan" id="individual_plan" onclick="javascript: close_more_options(1);" name="more_option" value="1"> I want to shop for non-Medicare individual heath plans.<br /><br />
     </div>
 </div>
 
@@ -71,14 +71,14 @@ $(document).keypress(function(e) {
 
 
 /*Update uploaded entry info*/
-function upload_registration_entry( age_bracket, plan_option )
+function upload_registration_entry( age_bracket, segment )
 {
            
             var ajax_data = {
                               ajax: '1',
                               age_bracket : age_bracket, //0=below 64, 1=above 64
                               zip_code : $('#zipcode').val(),
-                              plan_option : plan_option
+                              segment : segment
             }
           
             $.ajax({
@@ -96,7 +96,7 @@ function upload_registration_entry( age_bracket, plan_option )
                                       
                                     }
                                     else{
-                                        if(plan_option == 1){
+                                        if(segment == 0){
                                            window.location = '/plan/register?demographic=' + age_bracket;
                                            
                                         }else{
@@ -132,7 +132,7 @@ function show_more_options(){
         }
         else
         {
-            //since we don't need more options here set it to 0
+            //default to 0 for older than 64
             upload_registration_entry(age_bracket, 0);
         }
     }
@@ -144,11 +144,11 @@ function show_more_options(){
 
 }
 
-function close_more_options( plan_option )
+function close_more_options( segment )
 {
         $('.radio_plan').removeAttr('checked');
         $("#reg_options").trigger("close");
-        upload_registration_entry(age_bracket, plan_option);
+        upload_registration_entry(age_bracket, segment);
 }
 
 </script>

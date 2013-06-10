@@ -44,13 +44,13 @@ class Module_medicare_data_importer extends Module {
 							)
 						)
 					),
-                                  'plans' => array(
-					'name' 	=> 'medicare_data_importer:plans', // These are translated from your language file
-					'uri' 	=> 'admin/medicare_data_importer/plan',
+                                  'plan_types' => array(
+					'name' 	=> 'medicare_data_importer:plan_types', // These are translated from your language file
+					'uri' 	=> 'admin/medicare_data_importer/plan_types',
 					'shortcuts' => array(
-                                                 'create_plan' => array(
-							'name' 	=> 'medicare_data_importer:create_plan',
-							'uri' 	=> 'admin/medicare_data_importer/create_plan',
+                                                 'create_plan_type' => array(
+							'name' 	=> 'medicare_data_importer:create_plan_type',
+							'uri' 	=> 'admin/medicare_data_importer/create_plan_type',
 							'class' => 'add'
 							)
 						)
@@ -65,7 +65,7 @@ class Module_medicare_data_importer extends Module {
 
 	  $medicare_rates = "CREATE TABLE " . $this->db->dbprefix('rates') ." (
 					  	`id` int(11) NOT NULL AUTO_INCREMENT,
-                                                `plan_id` int(11) NOT NULL,
+                                                `plan_type_id` int(11) NOT NULL,
                                                 `company_id` int(11) NOT NULL,
                                                 `zipcode` text NOT NULL,
                                                 `preference` int(2) NOT NULL,
@@ -80,17 +80,11 @@ class Module_medicare_data_importer extends Module {
                                               ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
 					";
 		
-		$medicare_plan = "CREATE TABLE IF NOT EXISTS " . $this->db->dbprefix('plan') ." (
+		$medicare_plan_type = "CREATE TABLE IF NOT EXISTS " . $this->db->dbprefix('plan_type') ." (
 					  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
 					  `code` varchar(30) NOT NULL,
 					  `name` varchar(100) NOT NULL,
-					  `status` int(2) NOT NULL COMMENT '0=Inactive, 1=Active',
-                                          `basic_benefits` int(2) NOT NULL COMMENT '0=No, 1=Yes',
-                                          `skilled_nursing` int(2) NOT NULL COMMENT '0=No, 1=Yes',
-                                          `part_b_excess` int(2) NOT NULL COMMENT '0=No, 1=Yes',
-                                          `part_a_deductible` int(2) NOT NULL COMMENT '0=No, 1=Yes',
-                                          `part_b_deductible` int(2) NOT NULL COMMENT '0=No, 1=Yes',
-                                          `foreign_travel` int(2) NOT NULL COMMENT '0=No, 1=Yes',
+					  `segment` TINYINT( 2 ) NOT NULL DEFAULT  '0' COMMENT  '0 = Age below 64 Disabled or Older than 64 | 1= Age below 64 Individual Plan'
 					  `created_on` int(11) NOT NULL DEFAULT '0',
                                           `updated_on` int(11) NOT NULL DEFAULT '0',
 					  PRIMARY KEY (`id`)

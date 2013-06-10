@@ -8,10 +8,10 @@ $lang['medicare_data_importer:no_items']		=	'No Items';
 $lang['medicare_data_importer:upload']			=	'Upload Data';
 $lang['medicare_data_importer:create']			=	'Add Rate';
 $lang['medicare_data_importer:create_company']		=	'Add Company';
-$lang['medicare_data_importer:create_plan']		=	'Add Plan';
+$lang['medicare_data_importer:create_plan_type']	=	'Add Plan Type';
 
 //labels
-$lang['medicare_data_importer:plan']			=	'Plan';
+$lang['medicare_data_importer:plan_type']		=	'Plan Type';
 $lang['medicare_data_importer:company']			=	'Company';
 $lang['medicare_data_importer:gender']			=	'Gender';
 $lang['medicare_data_importer:zipcodes']		=	'Zipcodes';
@@ -31,5 +31,5 @@ $lang['medicare_data_importer:delete']			=	'Delete';
 $lang['medicare_data_importer:custom_button']	=	'Custom Button';
 $lang['medicare_data_importer:rates']			=	'Rates';
 $lang['medicare_data_importer:companies']		=	'Companies';
-$lang['medicare_data_importer:plans']		=	'Plans';
+$lang['medicare_data_importer:plan_types']		=	'Plan Types';
 ?>

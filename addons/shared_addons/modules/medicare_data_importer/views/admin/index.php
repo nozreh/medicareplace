@@ -9,7 +9,7 @@
 		<thead>
 		<tr>
                 <th>Company</th>
-                <th>Plan</th>
+                <th>Plan Type</th>
                 <th>Zip Codes</th>
                 <th  width="10%">Preference</th>
                 <th>Age</th>
@@ -38,7 +38,7 @@
                                 <?php print $rate->company_name; ?>
                         </td>
                         <td>
-                                <?php print $rate->plan_name; ?>
+                                <?php print $rate->plan_type_name; ?>
                         </td>
                         <td>
                                 <?php print $rate->zipcode; ?>

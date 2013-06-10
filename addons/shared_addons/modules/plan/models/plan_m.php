@@ -41,15 +41,9 @@ class Plan_m extends MY_Model {
 	{
 		$this->db->select('rates.*,
                         company.name AS company_name,
-                        plan.name as plan_name,
-                        plan.basic_benefits,
-                        plan.skilled_nursing,
-                        plan.part_b_excess,
-                        plan.part_a_deductible,
-                        plan.part_b_deductible,
-                        plan.foreign_travel,')
+                        plan_type.name as plan_type_name')
 			->join('company', 'rates.company_id = company.id')
-			->join('plan', 'rates.plan_id = plan.id');
+			->join('plan_type', 'rates.plan_type_id = plan_type.id');
 
 		$this->db->order_by('created_on', 'DESC');
 
@@ -59,7 +53,7 @@ class Plan_m extends MY_Model {
         public function get_by($key, $value = '')
 	{
 		$this->db->select('rates.*, plan.name')
-			->join('plan', 'rates.plan_id = plan.id', 'left');
+			->join('plan_type', 'rates.plan_type_id = plan_type.id', 'left');
 			
 		if (is_array($key))
 		{
@@ -84,12 +78,12 @@ class Plan_m extends MY_Model {
 				$this->db->where('company_id', $params['category']);
 		}
                 
-                if (!empty($params['plan_id']))
+                if (!empty($params['plan_type_id']))
 		{
-			if (is_array($params['plan_id']))
-				$this->db->where_in('plan_id', $params['plan_id']);
+			if (is_array($params['plan_type_id']))
+				$this->db->where_in('plan_type_id', $params['plan_type_id']);
 			else
-				$this->db->where('plan_id', $params['plan_id']);
+				$this->db->where('plan_type_id', $params['plan_type_id']);
 		}
 
 
@@ -106,7 +100,7 @@ class Plan_m extends MY_Model {
         function count_by($params = array())
 	{
 		$this->db->join('company', 'company.id = rates.company_id');
-                $this->db->join('plan', 'rates.plan_id = plan.id');
+                $this->db->join('plan_type', 'rates.plan_type_id = plan_type.id');
 
 		if (!empty($params['company_id']))
 		{
@@ -116,23 +110,23 @@ class Plan_m extends MY_Model {
 				$this->db->where('company_id', $params['category']);
 		}
                 
-                if (!empty($params['plan_id']))
+                if (!empty($params['plan_type_id']))
 		{
-			if (is_array($params['plan_id']))
-				$this->db->where_in('plan_id', $params['plan_id']);
+			if (is_array($params['plan_type_id']))
+				$this->db->where_in('plan_type_id', $params['plan_type_id']);
 			else
-				$this->db->where('plan_id', $params['plan_id']);
+				$this->db->where('plan_type_id', $params['plan_type_id']);
 		}
 
 		return $this->db->count_all_results('rates');
 	}
 	
 	
-	public function get_plan($plan_id = NULL)
+	public function get_plan_type($plan_type_id = NULL)
 	{
-                if( valued($plan_id) ){
+                if( valued($plan_type_id) ){
             
-                    return $this->db->get_where('plan', array('id' => $plan_id))
+                    return $this->db->get_where('plan_type', array('id' => $plan_type_id))
 						->row();
                 }else{
                     
@@ -219,9 +213,9 @@ class Plan_m extends MY_Model {
 			$this->db->where_in('company_id', $data['company_id']);
 		}
                 
-                if (array_key_exists('plan_id', $data))
+                if (array_key_exists('plan_type_id', $data))
 		{
-			$this->db->where_in('plan_id', $data['plan_id']);
+			$this->db->where_in('plan_type_id', $data['plan_type_id']);
 		}
                 
                 /*

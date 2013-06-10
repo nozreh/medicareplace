@@ -13,85 +13,74 @@
        <div id="names_div" class="well-large">
           
                 <!-- BEGIN APPLICANT -->
-                    <div class="dependants spouse well">
+                    <div class="dependants well">
                      <legend>Applicant*</legend>
                      <div class="control-group">
-			<label class="control-label">Gender:</label>
-			<div class="controls">
-				<?php echo $gender; ?>
-			</div>
+			<p class="text-info">Coverage for:</p>
+			<p>
+				<?php echo $user_info['last_name'].', '. $user_info['first_name']. $user_info['age'] .' '. strtoupper($user_info['gender']); 
+                                
+                                ?>
+			</p>
+                        <p>
+				<?php echo date('M. d, Y', strtotime($user_info['birth_date'])); ?>
+			</p>
                     </div>
                      <div class="control-group">
-			<label class="control-label">Date of Birth:</label>
-			<div class="controls">
-				<?php echo $birth_date; ?>
-			</div>
+			<p class="text-info">State and ZIP:</p>
+			<p>
+				<?php echo $user_info['state'].', '.$user_info['zip_code']; ?>
+			</p>
                     </div>
                     <div class="control-group">
-			<label class="control-label">Smoker:</label>
-			<div class="controls">
-				<?php echo $preference; ?>
-			</div>
+			<p class="text-info">County:</p>
+			<p>
+                            <?php echo $user_info['county']; ?>
+			</p>
                     </div>
                     <div class="control-group">
-			<label class="control-label">Are you enrolled in Medicare Parts A and B?:</label>
-			<div class="controls">
-				<?php echo $enrolled_in; ?>
-			</div>
+			<p class="text-info">City:</p>
+			<p>
+				<?php echo $user_info['city']; ?>
+			</p>
                     </div> 
                     <div class="control-group">
-			<label class="control-label">Zip Code:</label>
-			<div class="controls">
-                            <?php echo $zip_code; ?>
-			</div>
-                    </div>
-                    <div class="control-group">
-			<label class="control-label">Start Coverage:</label>
-			<div class="controls">
-				<?php echo $start_coverage; ?>
-			</div>
+			<p class="text-info">Coverage Start Date:</p>
+			<p>
+                            <?php echo date('M. d, Y', strtotime($user_info['start_coverage'])); ?>
+			</p>
                     </div>
                     
-                    <legend>Contact Info:</legend>
-                    <div class="control-group">
-			<label class="control-label">First Name:</label>
-			<div class="controls">
-                            <?php echo $first_name; ?>
-			</div>
-                    </div>
-                    <div class="control-group">
-			<label class="control-label">Last Name:</label>
-			<div class="controls">
-                            <?php echo  $last_name; ?>
-			</div>
-                    </div>
-                    <div class="control-group">
-			<label class="control-label">Address:</label>
-			<div class="controls">
-                            <?php echo $address; ?>
-			</div>
-                    </div>
-                    <div class="control-group">
-			<label class="control-label">City:</label>
-			<div class="controls">
-                            <?php echo $city; ?>
-			</div>
-                    </div>
-                    <div class="control-group">
-			<label class="control-label">County:</label>
-			<div class="controls">
-                            <?php echo $county; ?>
-			</div>
-                    </div>
-                    <div class="control-group">
-			<label class="control-label">State:</label>
-			<div class="controls">
-                            <?php echo $state; ?>
-			</div>
-                    </div>
                  
                   </div>
                 <!--  END APPLICANT --> 
        
         </div>
+
+
+<section class="title">
+	<h4>Rates</h4>
+</section>
+
+<section class="item">
+
+<?php if ($rates) : ?>
+
+<?php echo $this->load->view('partials/filters'); ?>
+
+<div id="filter-stage">
+
+	<?php echo form_open('plan/select_plan'); ?>
+
+		<?php echo $this->load->view('tables/plans'); ?>
+
+	<?php echo form_close(); ?>
+	
+</div>
+
+<?php else : ?>
+	<div class="no_data">No Available Plan</div>
+<?php endif; ?>
+
+</section>
 

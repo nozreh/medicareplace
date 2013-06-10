@@ -86,7 +86,7 @@ $config['rate_validation']   = array(
 
 		);
  
-  $config['plan_validation']   = array(
+  $config['plan_type_validation']   = array(
 			array(
                                 'field' => 'code',
                                 'label' => 'code',

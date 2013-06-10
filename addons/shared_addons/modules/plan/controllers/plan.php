@@ -31,6 +31,7 @@ class plan extends Public_Controller
 		$this->load->library('files/files');
 		$this->load->spark('curl/1.2.1');
 		$this->load->library('session');
+                $this->load->driver('Streams');
 			
 		if( valued($this->session->userdata('user_info')) )
                 {
@@ -316,13 +317,13 @@ class plan extends Public_Controller
             $segment = $this->session->userdata('segment');
             
             $company_list = $this->medicare_data_importer_m->get_all_companies();
-            $plan_list = $this->medicare_data_importer_m->get_all_plans();
+            $plan_list = $this->medicare_data_importer_m->get_plan_types_by_segment($segment);
             
             $base_where = array();
             //add post values to base_where if f_module is posted
             $base_where = $this->input->post('f_company') ? $base_where + array('company_id' => $this->input->post('f_company')) : $base_where;
 
-            $base_where = $this->input->post('f_plan') ? $base_where + array('plan_id' => $this->input->post('f_plan')) : $base_where;
+            $base_where = $this->input->post('f_plan_type') ? $base_where + array('plan_type_id' => $this->input->post('f_plan_type')) : $base_where;
 
             // Create pagination links
             $total_rows = $this->plan_m->count_by($base_where);
@@ -380,17 +381,17 @@ class plan extends Public_Controller
         public function ajax_filter()
         {
             $company = $this->input->post('f_company');
-            $plan = $this->input->post('f_plan');
+            $plan = $this->input->post('f_plan_type');
             //$keywords = $this->input->post('f_keywords');
 
             $post_data = array();
 
             if ( $plan != 0)
             {
-                $post_data['plan_id'] = $plan;
+                $post_data['plan_type_id'] = $plan;
             }
 
-            if ($category != 0)
+            if ($company != 0)
             {
                 $post_data['company_id'] = $company;
             }
@@ -407,9 +408,87 @@ class plan extends Public_Controller
             $this->template
                 ->set_layout(FALSE)
                 ->set('rates', $results)
-                ->build('tables/posts');
+                ->build('tables/plans');
         }
 	
+        
+        public function ajax_plan_details()
+        {
+            $segment = $this->input->post('segment');
+            $plan_type_id = $this->input->post('plan_type_id');
+            $company_id = $this->input->post('company_id');
+            
+            $data = array();
+            
+            switch($segment)
+            {
+                case 0:
+                    $params = array(
+                        'stream' => 'plan_details_segment_a',
+                        'namespace' => 'streams',
+                        'paginate' => 'no',
+                        'where' => 'plan_type_id = '.$plan_type_id.' AND company_id = '.$company_id
+                    );
+                    break;
+               case 1:
+                    $params = array(
+                        'stream' => 'plan_details_segment_b',
+                        'namespace' => 'streams',
+                        'paginate' => 'no',
+                        'where' => 'plan_type_id = '.$plan_type_id.' AND company_id = '.$company_id
+                    );
+                    break;
+                
+            
+            }
+            
+            $results = $this->streams->entries->get_entries($params);
+            $details = $results['entries'][0];
+            if(count($details) > 0){
+                
+                $output = '<table><tbody>';
+                $hidden_list = array('id','created','updated','created_by','ordering_count','plan_type_id','last','odd_even','count');
+
+                foreach($details as $label => $detail){
+                    
+                    if(in_array($label, $hidden_list)) continue; //we don't want to display some prebuilt data
+                    else{
+                        $label = ucfirst(str_replace('_', ' ', $label)); //format the label
+
+                        if(is_array($detail)){
+                            if(valued($detail['img'])){
+                               $output .= '<tr><td>'.$label.':</td><td>'. $detail['img'].'</td></tr>';
+                            }
+                            elseif (valued($detail['file'])) {
+                              $output .= '<tr><td>'.$label.':</td><td><a href="'. $detail['file'].'" target="_blank" >Click to view</a></td></tr>';
+                           }
+                           elseif (valued($detail['name'])) {
+                              $output .= '<tr><td>'.$label.':</td><td>'. $detail['name'].'</td></tr>';
+                           }
+                           else{
+                               $output .= '<tr><td>'.$label.':</td><td>'. $detail['val'].'</td></tr>';
+                            }
+                        }
+                        else {
+                         $output .= '<tr><td>'.$label.':</td><td>'. $detail.'</td></tr>';  
+                        }
+                    }
+
+                }
+
+                 $output .= ' </tbody></table>';
+
+                $data['result'] = $output;
+                $data['success'] = TRUE;
+            }  
+            else     
+            {
+                $data['result'] = 'No detail found';
+                $data['success'] = FALSE;
+            }
+            
+            echo json_encode($data);
+        }
 	
         
         public function _reset_sessions()
@@ -417,6 +496,24 @@ class plan extends Public_Controller
             $this->session->set_userdata('zipcode_details',NULL);
             $this->session->set_userdata('age_bracket', NULL);
             $this->session->set_userdata('segment', NULL);
+        }
+        
+        public function birth_date_check($birth_date)
+        {
+       
+            $age_bracket = $this->session->userdata('age_bracket');
+            $date_tocheck = date('Y') - date('Y', strtotime($birth_date));
+            
+              
+                if( $date_tocheck <= 64 && $age_bracket == 1 )
+                {
+                    $this->form_validation->set_message('birth_date_check', 'The %s field input is less than age 64');
+                    return FALSE;
+                }
+		else
+		{
+                    return TRUE;
+		}
         }
 	
 	

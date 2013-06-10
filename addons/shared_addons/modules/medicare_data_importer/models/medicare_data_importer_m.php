@@ -24,9 +24,9 @@ class medicare_data_importer_m extends MY_Model {
 /* BEGIN GET SECTION*/
 	function get_all_rates()
 	{
-		$this->db->select('rates.*, company.name AS company_name, plan.name as plan_name')
+		$this->db->select('rates.*, company.name AS company_name, plan_type.name as plan_type_name')
 			->join('company', 'rates.company_id = company.id')
-			->join('plan', 'rates.plan_id = plan.id');
+			->join('plan_type', 'rates.plan_type_id = plan_type.id');
 
 		$this->db->order_by('rates.created_on', 'ASC');
 
@@ -44,13 +44,13 @@ class medicare_data_importer_m extends MY_Model {
 		return $this->db->get('company')->result();
 	}
         
-        function get_all_plans()
+        function get_all_plan_types()
 	{
-		$this->db->select('plan.*');
+		$this->db->select('plan_type.*');
 
-		$this->db->order_by('plan.code', 'ASC');
+		$this->db->order_by('plan_type.code', 'ASC');
 
-		return $this->db->get('plan')->result();
+		return $this->db->get('plan_type')->result();
 	}
         
         
@@ -74,26 +74,48 @@ class medicare_data_importer_m extends MY_Model {
         }
         
         public function get_company_by_id($id = NULL){
-        
-            $query = $this->db->get_where('company', array('id' => $id));
+            
+             if(is_array($id)){
+                $query = $this->db->get_where('company', $id);
+            }else{
+                 $query = $this->db->get_where('company', array('id' => $id));
+            }
+            
+            
+           
             if($query->num_rows() > 0){
             return $query->row();
            }else return FALSE;
             
         }
         
-        public function get_plan_by_code($code = NULL){
+        public function get_plan_type_by_code($code = NULL){
         
-            $query = $this->db->get_where('plan', array('code' => $code));
+            $query = $this->db->get_where('plan_type', array('code' => $code));
             if($query->num_rows() > 0){
             return $query->row();
            }else return FALSE;
             
         }
         
-        public function get_plan_by_id($id = NULL){
+        public function get_plan_types_by_segment($segment = NULL)
+        {
+            $query = $this->db->get_where('plan_type', array('segment' => $segment));
+            
+            if($query->num_rows() > 0){
+            return $query->result();
+           }else return FALSE;
+        }
         
-            $query = $this->db->get_where('plan', array('id' => $id));
+        public function get_plan_type_by_id($id = NULL){
+        
+            if(is_array($id)){
+                $query = $this->db->get_where('plan_type', $id);
+            }else{
+                $query = $this->db->get_where('plan_type', array('id' => $id));
+            }
+            
+            
             if($query->num_rows() > 0){
             return $query->row();
            }else return FALSE;
@@ -107,11 +129,22 @@ class medicare_data_importer_m extends MY_Model {
 	//create a new rate item
 	public function set_rate($input)
 	{
-		// insert new rate record
+            $rate_exist = $this->db->where('plan_type_id', $input['plan_type_id'])
+                                   ->where('company_id', $input['company_id'])
+                                   ->where('zipcode', $input['zipcode'])
+                                   ->get('rates');
+            
+            if($rate_exist->num_rows() > 0){
+                $id = $rate_exist->row();
+                $this->edit_rate($id->id, $input); 
+                return 'Item already exist, updating record';
+            }
+            else{
+                // insert new rate record
 		$to_insert = array(
-			'plan_id' => $input['plan_id'],
+			'plan_type_id' => $input['plan_type_id'],
 			'company_id' => $input['company_id'],
-                        'zipcode' => (string)$input['zipcode'],
+                        'zipcode' => $input['zipcode'],
                         'preference' => $input['preference'],
                         'age' => $input['age'],
                         'segment' => $input['segment'],
@@ -125,7 +158,8 @@ class medicare_data_importer_m extends MY_Model {
                 
                 if($this->db->insert('rates', $to_insert)){
                     return $this->db->insert_id();
-                }else return FALSE; 
+                }else return FALSE;
+            }
 	}
 
 	//edit a new item
@@ -133,7 +167,7 @@ class medicare_data_importer_m extends MY_Model {
 	{
 		// $fileinput = Files::upload($this->folder->id, FALSE, 'fileinput');
 		$to_insert = array(
-			'plan_id' => $input['plan_id'],
+			'plan_type_id' => $input['plan_type_id'],
 			'company_id' => $input['company_id'],
                         'zipcode' => (string)$input['zipcode'],
                         'preference' => $input['preference'],
@@ -215,48 +249,35 @@ class medicare_data_importer_m extends MY_Model {
         
         
         //create a new company item
-	public function set_plan($input)
+	public function set_plan_type($input)
 	{
 		// insert new rate record
 		$to_insert = array(
 			'code' => $input['code'],
 			'name' => $input['name'],
-                        'status' => $input['status'],
-                        'status' => $input['status'],
-                        'basic_benefits' => $input['basic_benefits'],
-                        'skilled_nursing' => $input['skilled_nursing'],
-                        'part_b_excess' => $input['part_b_excess'],
-                        'part_a_deductible' => $input['part_a_deductible'],
-                        'part_b_deductible' => $input['part_b_deductible'],
-                        'foreign_travel' => $input['foreign_travel'],
+                        'segment' => $input['segment'],
                         'created_on' => time(),
                         'updated_on' => time(),
 
 		);
                 
-                if($this->db->insert('plan', $to_insert)){
+                if($this->db->insert('plan_type', $to_insert)){
                     return $this->db->insert_id();
                 }else return FALSE; 
 	}
 
 	//edit a new item
-	public function edit_plan($id = 0, $input)
+	public function edit_plan_type($id = 0, $input)
 	{
 		// $fileinput = Files::upload($this->folder->id, FALSE, 'fileinput');
 		$to_insert = array(
 			'name' => $input['name'],
-                        'status' => $input['status'],
-                        'basic_benefits' => $input['basic_benefits'],
-                        'skilled_nursing' => $input['skilled_nursing'],
-                        'part_b_excess' => $input['part_b_excess'],
-                        'part_a_deductible' => $input['part_a_deductible'],
-                        'part_b_deductible' => $input['part_b_deductible'],
-                        'foreign_travel' => $input['foreign_travel'],
+                        'segment' => $input['segment'],
                         'updated_on' => time(),
 
 		);
 
-                if($this->db->where('id', $id)->update('plan', $to_insert)){
+                if($this->db->where('id', $id)->update('plan_type', $to_insert)){
                     return TRUE;
                 }else return FALSE; 
                 
@@ -264,16 +285,12 @@ class medicare_data_importer_m extends MY_Model {
 	}
         
         //edit a new item
-	public function delete_plan($id = 0)
+	public function delete_plan_type($id = 0)
 	{
 		// $fileinput = Files::upload($this->folder->id, FALSE, 'fileinput');
-		$to_insert = array(
-                        'status' => 0,
-                        'updated_on' => time(),
+		
 
-		);
-
-                if($this->db->where('id', $id)->update('plan', $to_insert)){
+                if($this->db->delete('plan_type', array('id' => $id))){
                     return TRUE;
                 }else return FALSE; 
                 
