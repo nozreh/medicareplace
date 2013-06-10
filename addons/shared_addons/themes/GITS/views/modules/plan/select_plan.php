@@ -1,5 +1,4 @@
 <div class="row">
-    <h2 class="page-title" id="page_title"><?php echo 'User Info'; ?></h2>
     <p>
         <span><?php echo 'Step 1'; ?></span>-&gt;
         <span><?php echo 'Step 2'; ?></span>-&gt;
@@ -13,8 +12,8 @@
                 <?php echo $this->load->view('partials/filters'); ?>
     <div id="names_div" class="">
         <!-- BEGIN APPLICANT -->
-        <div class="dependants">
-            <legend>Applicant*</legend>
+        <div class="white-panel dependants" style="margin: -10px 5px 5px 5px;">
+            <h5>YOUR PERSONAL INFO</h5>
             <div class="control-group">
                 <p class="text-info">Coverage for:</p>
                 <p>
@@ -49,6 +48,7 @@
                     <?php echo date('M. d, Y', strtotime($user_info['start_coverage'])); ?>
                 </p>
             </div>
+            <a class="btn btn-small btn-primary">EDIT INFO</a>
         </div>
         <!--  END APPLICANT --> 
     </div>
