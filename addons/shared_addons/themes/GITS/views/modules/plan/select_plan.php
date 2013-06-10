@@ -1,25 +1,10 @@
-<div  class="row span4">
+<div class="row">
     <h2 class="page-title" id="page_title"><?php echo 'User Info'; ?></h2>
     <p>
         <span><?php echo 'Step 1'; ?></span>-&gt;
         <span><?php echo 'Step 2'; ?></span>-&gt;
-        <span id="active_step"><?php echo 'Step 3'; ?></span>
+        <span id="active_step" class="label"><?php echo 'Step 3'; ?></span>
     </p>
-    
-    <section class="item">
-        <?php if ($rates) : ?>
-            <?php echo $this->load->view('partials/filters'); ?>
-            <div id="filter-stage">
-                <?php echo form_open('plan/select_plan'); ?>
-                <?php echo '<h4>Rates</h4>'; ?>
-                <?php echo $this->load->view('tables/plans'); ?>
-                <?php echo form_close(); ?>
-            </div>
-        <?php else : ?>
-            <div class="no_data">No Available Plan</div>
-        <?php endif; ?>
-    </section>
-
     <div id="names_div" class="well-large">
         <!-- BEGIN APPLICANT -->
         <div class="dependants">
@@ -61,4 +46,23 @@
         </div>
         <!--  END APPLICANT --> 
     </div>
+</div>
+<div class="row">
+    <section class="item">
+        <div  class="row span4">
+            <?php if ($rates) : ?>
+                <?php echo '<h4>Rates</h4>'; ?>
+                <?php echo $this->load->view('partials/filters'); ?>
+            </div>
+            <div  class="row span8">
+                <div id="filter-stage">
+                    <?php echo form_open('plan/select_plan'); ?>
+                    <?php echo $this->load->view('tables/plans'); ?>
+                    <?php echo form_close(); ?>
+                </div>
+            </div>
+        <?php else : ?>
+            <div class="no_data">No Available Plan</div>
+        <?php endif; ?>
+    </section>
 </div>
