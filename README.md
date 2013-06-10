@@ -12,3 +12,7 @@
 
 Medicare Place Web app is currently in development period.
 
+## Well
+
+I'd rather commit to a repo than to a relationship @rothattack
+
