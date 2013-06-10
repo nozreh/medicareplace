@@ -1,0 +1,12 @@
+/* 
+    Document   : step3css
+    Created on : Jun 10, 2013, 10:50:06 AM
+    Author     : Robert Roth
+    Description:
+        main style for the GITS MedicarePlace step 3 or plan selection stage.
+*/
+
+.white-panel{
+    background: #FFFFFF;
+    color: #0099ff;
+}

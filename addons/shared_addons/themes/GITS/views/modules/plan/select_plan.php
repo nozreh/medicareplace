@@ -10,7 +10,6 @@
     <section class="item">
         <div  class="row span4">
             <?php if ($rates) : ?>
-                <?php echo '<h4>Rates</h4>'; ?>
                 <?php echo $this->load->view('partials/filters'); ?>
     <div id="names_div" class="">
         <!-- BEGIN APPLICANT -->
