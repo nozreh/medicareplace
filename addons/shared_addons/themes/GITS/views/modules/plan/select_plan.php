@@ -5,7 +5,14 @@
         <span><?php echo 'Step 2'; ?></span>-&gt;
         <span id="active_step" class="label"><?php echo 'Step 3'; ?></span>
     </p>
-    <div id="names_div" class="well-large">
+</div>
+<div class="row">
+    <section class="item">
+        <div  class="row span4">
+            <?php if ($rates) : ?>
+                <?php echo '<h4>Rates</h4>'; ?>
+                <?php echo $this->load->view('partials/filters'); ?>
+    <div id="names_div" class="">
         <!-- BEGIN APPLICANT -->
         <div class="dependants">
             <legend>Applicant*</legend>
@@ -46,13 +53,6 @@
         </div>
         <!--  END APPLICANT --> 
     </div>
-</div>
-<div class="row">
-    <section class="item">
-        <div  class="row span4">
-            <?php if ($rates) : ?>
-                <?php echo '<h4>Rates</h4>'; ?>
-                <?php echo $this->load->view('partials/filters'); ?>
             </div>
             <div  class="row span8">
                 <div id="filter-stage">
