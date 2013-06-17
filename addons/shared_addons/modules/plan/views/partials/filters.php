@@ -14,7 +14,7 @@
                 <input type="checkbox" name="f_plan[]" id="f_plan" value="<?php echo $plan->id; ?>" text="<?php echo $plan->name; ?>" checked="checked" style="margin:10px" /><?php echo $plan->name; ?></br>
             <?php endforeach; ?>
                 <button id="clear-all2" class="btn btn-small btn-primary">CLEAR ALL</button>
-                <button id="plan-f-only" class="btn btn-small btn-success">PLAN F ONLY</button>
+                <button id="plan-f-only" class="btn btn-small btn-success plan-f-only">PLAN F ONLY</button>
         </div>
     <?php echo form_close(); ?>
 </fieldset>

@@ -150,20 +150,13 @@ $(function() {
 $(document).ready(function() {
     //hack to check all checkboxes
     $('input:checkbox').attr('checked', 'checked');
-    $(this).val('uncheck all');
 
-    $('#clear-all').click(function() {
+    $('#clear-all, #clear-all2').click(function() {
         $(this).closest('div').find(':checkbox').removeAttr('checked');
-        $(this).val('check all');
-    });
-    $('#clear-all2').click(function() {
-        $(this).closest('div').find(':checkbox').removeAttr('checked');
-        $(this).val('check all');
     });
     $('#plan-f-only').click(function() {
         $(this).closest('div').find(':checkbox').removeAttr('checked');
-        $(this).val('check all');
-        $('input.plan-f:checkbox').attr('checked', 'checked');
-        $(this).val('uncheck all');
+        $(':checkbox[value=6]').attr('checked', 'checked');
+        pyro.filter.do_filter();
     });
 }); //by @rothattack the pogi

@@ -1,6 +1,6 @@
 <nav>
     <div class="nav-inner container">
-        <a href='http://www.medicareforidiots.com/'><div class="main-logo" title="Home"></div></a>
+        <a href='{{ url:site uri="home" }}'><div class="main-logo" title="Home"></div></a>
         <ul class="top-nav">
             {{ if user:logged_in }}
             <li class="drop-down settings" style='float: right;'>
