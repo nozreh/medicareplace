@@ -3,8 +3,8 @@
  * Author: Herzon
  */
 $gender_options = array('' => 'Select Gender:','male' => 'Male', 'female' => 'Female');
-$months = date_months('M'); 
 $preferences = array('0' => 'No', '1' => 'Yes');
+$firstday_of_month = date('m/d/Y', day_of_month());
 $choices = array('0' => 'No', '1' => 'Yes', '2' => 'Not sure');
 
 ?>
@@ -41,11 +41,11 @@ $choices = array('0' => 'No', '1' => 'Yes', '2' => 'Not sure');
                      <div class="control-group">
 			<label class="control-label">Date of Birth:</label>
 			<div class="controls">
-				<div class="input-append date" data-date="<?php echo date('d-m-Y'); ?>" data-date-format="dd-mm-yyyy">
-                                    <input name="birth_date" class="span10" size="16" type="text" value="<?php echo set_value('birth_date', isset($applicant['birth_date']) ? $applicant['birth_date'] :  date('d-m-Y')); ?>">
+				<div class="input-append date" data-date="<?php echo date('m/d/Y'); ?>" data-date-format="mm/dd/yyyy">
+                                    <input name="birth_date" class="span10" size="16" type="text" value="<?php echo set_value('birth_date', isset($applicant['birth_date']) ? $applicant['birth_date'] :  date('m/d/Y')); ?>">
                                     <span class="add-on"><i class="icon-th"></i></span>   
                                 </div>
-                                <span class="help-inline">DD-MM-YYYY</span>
+                                <span class="help-inline">MM/DD/YYYY</span>
 			</div>
                     </div>
                     <div class="control-group">
@@ -69,11 +69,11 @@ $choices = array('0' => 'No', '1' => 'Yes', '2' => 'Not sure');
                     <div class="control-group">
 			<label class="control-label">Start Coverage:</label>
 			<div class="controls">
-				<div class="input-append date" data-date="<?php echo date('d-m-Y'); ?>" data-date-format="dd-mm-yyyy">
-                                    <input name="start_coverage" class="span10" size="16" type="text" value="<?php echo set_value('start_coverage', isset($start_coverage) ? $start_coverage :  date('d-m-Y')); ?>">
+				<div class="input-append date" data-date="<?php echo $firstday_of_month; ?>" data-date-format="mm/dd/yyyy">
+                                    <input name="start_coverage" class="span10" size="16" type="text" value="<?php echo set_value('start_coverage', isset($start_coverage) ? $start_coverage :  $firstday_of_month); ?>">
                                     <span class="add-on"><i class="icon-th"></i></span>   
                                 </div>
-                                <span class="help-inline">DD-MM-YYYY</span>
+                                <span class="help-inline">MM/DD/YYYY</span>
 			</div>
                     </div>
                     

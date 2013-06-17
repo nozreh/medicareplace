@@ -72,10 +72,10 @@ $db[PYRO_STAGING] = array(
 
 // Production
 $db[PYRO_PRODUCTION] = array(
-	'hostname'		=> 	'localhost',
-	'username'		=> 	'webteam',
-	'password'		=> 	'20webdev13',
-	'database'		=> 	'webteam_medicare',
+	'hostname'		=> 	'themedicareplace.com',
+	'username'		=> 	'themedic_dbuser',
+	'password'		=> 	'themediC#143',
+	'database'		=> 	'themedic_medicare',
 	'dbdriver' 		=> 	'mysql',
 	'active_r' 		=>	TRUE,
 	'pconnect' 		=>	FALSE,

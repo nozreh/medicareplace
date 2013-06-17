@@ -100,15 +100,19 @@ function js_redirect($url = null) {
 /**
  * get month in words
  */	
-function date_months($format = 'F') {
+function day_of_month() {
         
-    $months = array();
-    for($i = 1; $i <=12; $i++)
-    {
-        $months[$i] = date($format, mktime(0, 0, 0, $i, 1));
-    }
     
-    return $months;
+    $curMonth = date('n');
+	$curYear  = date('Y');
+
+	if ($curMonth == 12)
+    	$firstDayNextMonth = mktime(0, 0, 0, 0, 0, $curYear+1);
+	else
+    	$firstDayNextMonth = mktime(0, 0, 0, $curMonth+1, 1);
+
+    
+    return $firstDayNextMonth;
 }
 
 

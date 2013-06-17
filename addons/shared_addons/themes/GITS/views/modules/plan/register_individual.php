@@ -3,7 +3,7 @@
  * Author: Herzon
  */
 $gender_options = array('' => 'Select Gender:','male' => 'Male', 'female' => 'Female');
-$months = date_months('M'); 
+$firstday_of_month = date('m/d/Y', day_of_month());
 $preferences = array('0' => 'No', '1' => 'Yes');
 $student = array('0' => 'No', '1' => 'Yes');
 $base_dependants = array('1' => 'Applicant','2' => 'Spouse', '3' => 'Child');
@@ -43,11 +43,11 @@ $base_dependants = array('1' => 'Applicant','2' => 'Spouse', '3' => 'Child');
                      <div class="control-group">
 			<label class="control-label">Date of Birth:</label>
 			<div class="controls">
-				<div class="input-append date" data-date="<?php echo date('d-m-Y'); ?>" data-date-format="dd-mm-yyyy">
+				<div class="input-append date" data-date="<?php echo date('m/d/Y'); ?>" data-date-format="mm/dd/yyyy">
                                     <input name="birth_date[]" class="span10" size="16" type="text" value="<?php echo $applicant['birth_date']; ?>">
                                     <span class="add-on"><i class="icon-th"></i></span>   
                                 </div>
-                                <span class="help-inline">DD-MM-YYYY</span>
+                                <span class="help-inline">MM/DD/YYYY</span>
 			</div>
                     </div>
                     <div class="control-group">
@@ -71,11 +71,11 @@ $base_dependants = array('1' => 'Applicant','2' => 'Spouse', '3' => 'Child');
                     <div class="control-group">
 			<label class="control-label">Start Coverage:</label>
 			<div class="controls">
-				<div class="input-append date" data-date="<?php echo date('d-m-Y'); ?>" data-date-format="dd-mm-yyyy">
-                                    <input name="start_coverage" class="span10" size="16" type="text" value="<?php echo date('d-m-Y'); ?>">
+				<div class="input-append date" data-date="<?php echo $firstday_of_month; ?>" data-date-format="mm/dd/yyyy">
+                                    <input name="start_coverage" class="span10" size="16" type="text" value="<?php echo $firstday_of_month; ?>">
                                     <span class="add-on"><i class="icon-th"></i></span>   
                                 </div>
-                                <span class="help-inline">DD-MM-YYYY</span>
+                                <span class="help-inline">MM/DD/YYYY</span>
 			</div>
                     </div>
                     
@@ -136,11 +136,11 @@ $base_dependants = array('1' => 'Applicant','2' => 'Spouse', '3' => 'Child');
                      <div class="control-group">
 			<label class="control-label">Date of Birth:</label>
 			<div class="controls">
-				<div class="input-append date" data-date="<?php echo date('d-m-Y'); ?>" data-date-format="dd-mm-yyyy">
+				<div class="input-append date" data-date="<?php echo date('m/d/Y'); ?>" data-date-format="mm/dd/yyyy">
                                     <input name="birth_date[]" class="span10" size="16" type="text" value="<?php echo $spouse['birth_date']; ?>">
                                     <span class="add-on"><i class="icon-th"></i></span>   
                                 </div>
-                                <span class="help-inline">DD-MM-YYYY</span>
+                                <span class="help-inline">MM/DD/YYYY</span>
 			</div>
                     </div>
                     <div class="control-group">
@@ -171,11 +171,11 @@ $base_dependants = array('1' => 'Applicant','2' => 'Spouse', '3' => 'Child');
                      <div class="control-group">
 			<label class="control-label">Date of Birth:</label>
 			<div class="controls">
-				<div class="input-append date" data-date="<?php echo date('d-m-Y'); ?>" data-date-format="dd-mm-yyyy">
+				<div class="input-append date" data-date="<?php echo date('m/d/Y'); ?>" data-date-format="mm/dd/yyyy">
                                     <input name="birth_date[]" class="span10" size="16" type="text" value="<?php echo $child['birth_date']; ?>">
                                     <span class="add-on"><i class="icon-th"></i></span>   
                                 </div>
-                                <span class="help-inline">DD-MM-YYYY</span>
+                                <span class="help-inline">MM/DD/YYYY</span>
 			</div>
                     </div>
                     <div class="control-group">
@@ -243,11 +243,11 @@ $base_dependants = array('1' => 'Applicant','2' => 'Spouse', '3' => 'Child');
                     <div class="control-group">
 			<label class="control-label">Start Coverage:</label>
 			<div class="controls">
-				<div class="input-append date" data-date="<?php echo date('d-m-Y'); ?>" data-date-format="dd-mm-yyyy">
-                                    <input name="start_coverage" class="span10" size="16" type="text" value="<?php echo date('d-m-Y'); ?>">
+				<div class="input-append date" data-date="<?php echo $firstday_of_month; ?>" data-date-format="mm/dd/yyyy">
+                                    <input name="start_coverage" class="span10" size="16" type="text" value="<?php echo $firstday_of_month; ?>">
                                     <span class="add-on"><i class="icon-th"></i></span>   
                                 </div>
-                                <span class="help-inline">DD-MM-YYYY</span>
+                                <span class="help-inline">MM/DD/YYYY</span>
 			</div>
                     </div>
                     
