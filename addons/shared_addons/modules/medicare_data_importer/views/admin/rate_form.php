@@ -38,6 +38,14 @@
 		Below 65 = 64
                 </div>
 		</li><li>
+		<label for="gender"><?php echo lang('medicare_data_importer:gender'); ?></label>
+		<div class="input">
+		<?php $genders = array('male' => 'Male', 'female' => 'Female'); ?>
+		<?php print form_dropdown('gender', $genders, $rate->gender); ?>
+		</div>
+		</li>
+		
+		<li>
 		<label for="amount">Amount</label>
 		<div class="input">
 		<?php echo form_input("amount", set_value("amount", $rate->amount)); ?> Don't include $ symbol

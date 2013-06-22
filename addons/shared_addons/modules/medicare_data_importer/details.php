@@ -70,6 +70,7 @@ class Module_medicare_data_importer extends Module {
                                                 `zipcode` text NOT NULL,
                                                 `preference` int(2) NOT NULL,
                                                 `age` smallint(3) NOT NULL,
+                                                `gender` smallint(3) NOT NULL,
                                                 `segment` TINYINT( 2 ) NOT NULL DEFAULT  '0' COMMENT  '0 = Age below 64 Disabled or Older than 64 | 1= Age below 64 Individual Plan'
                                                 `amount` decimal(10,2) NOT NULL,
                                                 `addon_amount` decimal(10,2) NOT NULL,

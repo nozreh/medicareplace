@@ -13,6 +13,7 @@
                 <th>Zip Codes</th>
                 <th  width="10%">Preference</th>
                 <th>Age</th>
+                <th>Gender</th>
                 <th>Segment</th>
                 <th>Price</th>
                 <th>Misc</th>
@@ -51,6 +52,11 @@
                         <td>
                                 <?php $age = $rate->age < 65 ? 'Below 65' : $rate->age;
                                       print $age;
+                                ?>
+                        </td>
+                        <td>
+                                <?php $gender = $rate->gender == 0 ? 'Male' : 'Female';
+                                      print $gender;
                                 ?>
                         </td>
                         <td>

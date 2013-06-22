@@ -39,13 +39,21 @@ class Admin extends Admin_Controller
 	 */
 	public function index()
 	{
-		$rates = $this->medicare_data_importer_m->get_all_rates();
+		
+		// Create pagination links
+		$total_rows = $this->medicare_data_importer_m->count_rates();
+		$pagination = create_pagination('admin/medicare_data_importer/index', $total_rows);
+		// Using this data, get the relevant results
+		$rates = $this->medicare_data_importer_m->get_all_rates($pagination['limit']);
+
+		
+		//$rates = $this->medicare_data_importer_m->get_all_rates();
 		
 		$this->template
 			->title($this->module_details['name'])
-                        ->set('active_section', 'rates')
+            ->set('active_section', 'rates')
 			->build('admin/index',array(
-			'rates' => $rates));
+			'rates' => $rates, 'pagination' => $pagination));
 	}
 	
 	/**
@@ -63,7 +71,7 @@ class Admin extends Admin_Controller
 			
 			$config['upload_path'] 		= UPLOAD_PATH;
 			$config['allowed_types'] 	= 'xlsx';
-			$config['max_size']             = '5048';
+			$config['max_size']         = '10240';
 			$config['overwrite'] 		= TRUE;
 
 			$this->load->library('upload', $config);
@@ -72,32 +80,33 @@ class Admin extends Admin_Controller
 			if ($this->upload->do_upload())
 			{
                             $upload_data = $this->upload->data();
-
                             $xlsx = new SimpleXLSX($upload_data['full_path']);
                             $rows = count($xlsx->rows()) > 0 ? $xlsx->rows() : NULL;
                             $data = array();
-
+							
+							
                             // Now try to open the xlsx file
-                            if ( valued($rows) )
-                                    {
+                            if ( valued($rows) ){
+									
 
-                                        foreach($rows as $id => $row)
+                                       for($i = 0; $i <= count($xlsx->rows()); $i++)
                                         {
-                                               
-                                                if($id > 0)
-                                                {
+                                                    
+                                                    $gender = strtolower(trim($rows[$i][5])) == 'male' ? 0 : 1;
                                                     
                                                     $data = array(
-                                                    'plan_type_id' => $this->medicare_data_importer_m->get_plan_type_by_code($row[0])->id,
-                                                    'company_id' => $this->medicare_data_importer_m->get_company_by_code($row[1])->id,
+                                                    'plan_type_id' => $this->medicare_data_importer_m->get_plan_type_by_code( strtolower(trim($row[0])))->id,
+                                                    'company_id' => $this->medicare_data_importer_m->get_company_by_code(strtolower(trim($row[1])))->id,
                                                     'zipcode' => trim($row[2]),
                                                     'preference' => $row[3],
                                                     'age' => $row[4],
-                                                    'segment' => $row[5],
-                                                    'amount' => $row[6],
-                                                    'addon_amount' => $row[7],
-                                                    'remarks' => $row[8],
-                                                    
+                                                    'gender' => $gender,
+                                                    'segment' => $row[6],
+                                                    'amount' => $row[7],
+                                                    'addon_amount' => $row[8],
+                                                    'remarks' => $row[9],
+                                                    'created_on' => time(),
+                                                    'updated_on' => time(),
                                                     );
 
                                                     $new_rate_id = $this->medicare_data_importer_m->set_rate($data);
@@ -112,9 +121,9 @@ class Admin extends Admin_Controller
                                                         continue;     
                                                     }
 
-                                                }
-
                                         }
+                                        
+                                        
                                     }
                                     else
                                     {
@@ -156,6 +165,7 @@ class Admin extends Admin_Controller
 		{   
                     if($this->form_validation->run())
                     {
+                    	$gender = $this->input->post('gender') == 'male' ? 0 : 1;
 
                         $m_data = array(
                                 'plan_type_id' => $this->input->post('plan_type_id'),
@@ -163,6 +173,7 @@ class Admin extends Admin_Controller
                                 'zipcode' => $this->input->post('zipcode'),
                                 'preference' => $this->input->post('preference'),
                                 'age' => $this->input->post('age'),
+                                'gender' => $gender,
                                 'segment' => $this->input->post('segment'),
                                 'amount' => $this->input->post('amount'),
                                 'addon_amount' => $this->input->post('addon_amount'),
@@ -221,13 +232,14 @@ class Admin extends Admin_Controller
                     // check if the form validation passed
                     if($this->form_validation->run())
                     {
-
+						$gender = $this->input->post('gender') == 'male' ? 0 : 1;
                         $m_data = array(
                                 'plan_type_id' => $this->input->post('plan_type_id'),
                                 'company_id' => $this->input->post('company_id'),
                                 'zipcode' => $this->input->post('zipcode'),
                                 'preference' => $this->input->post('preference'),
                                 'age' => $this->input->post('age'),
+                                'gender' => $gender,
                                 'segment' => $this->input->post('segment'),
                                 'amount' => $this->input->post('amount'),
                                 'addon_amount' => $this->input->post('addon_amount'),

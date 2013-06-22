@@ -22,15 +22,22 @@ class medicare_data_importer_m extends MY_Model {
 	}
 	
 /* BEGIN GET SECTION*/
-	function get_all_rates()
+	function get_all_rates($params = array())
 	{
 		$this->db->select('rates.*, company.name AS company_name, plan_type.name as plan_type_name')
 			->join('company', 'rates.company_id = company.id')
 			->join('plan_type', 'rates.plan_type_id = plan_type.id');
-
 		$this->db->order_by('rates.created_on', 'ASC');
-
+		$this->db->limit($params[0], $params[1]);
+		
+		// Limit the results based on 1 number or 2 (2nd is offset)
 		return $this->db->get('rates')->result();
+	}
+	
+	function count_rates(){
+	
+	return $this->db->count_all_results('rates');
+	
 	}
         
         
@@ -147,6 +154,7 @@ class medicare_data_importer_m extends MY_Model {
                         'zipcode' => $input['zipcode'],
                         'preference' => $input['preference'],
                         'age' => $input['age'],
+                        'gender' => $input['gender'],
                         'segment' => $input['segment'],
                         'amount' => $input['amount'],
                         'addon_amount' => $input['addon_amount'],
@@ -161,6 +169,19 @@ class medicare_data_importer_m extends MY_Model {
                 }else return FALSE;
             }
 	}
+	
+	public function set_batch_rate($input)
+	{
+        $this->db->trans_start();
+
+			$this->db->insert_batch('rates', $input);
+
+		$this->db->trans_complete();
+
+		return $this->db->trans_status();
+	}
+	
+	
 
 	//edit a new item
 	public function edit_rate($id = 0, $input)
@@ -172,6 +193,7 @@ class medicare_data_importer_m extends MY_Model {
                         'zipcode' => (string)$input['zipcode'],
                         'preference' => $input['preference'],
                         'age' => $input['age'],
+                        'gender' => $input['gender'],
                         'segment' => $input['segment'],
                         'amount' => $input['amount'],
                         'addon_amount' => $input['addon_amount'],
