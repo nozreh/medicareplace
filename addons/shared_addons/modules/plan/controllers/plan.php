@@ -382,7 +382,9 @@ class plan extends Public_Controller
         {
             $company = $this->input->post('f_company');
             $plan = $this->input->post('f_plan_type');
-            //$keywords = $this->input->post('f_keywords');
+            $user_info = $this->session->userdata('user_info');
+            $age_bracket = $this->session->userdata('age_bracket');
+            $segment = $this->session->userdata('segment');
 
             $post_data = array();
 
@@ -395,8 +397,18 @@ class plan extends Public_Controller
             {
                 $post_data['company_id'] = $company;
             }
+            
+            if ( valued($user_info['zipcode']))
+            {
+                $post_data['zipcode'] = $user_info['zipcode'];
+            }
 
-            //keywords, lets explode them out if they exist
+            if ( valued($segment))
+            {
+                $post_data['segment'] = $segment;
+            }
+
+            //zipcode, lets explode them out if they exist
             /*if ($keywords)
             {
                 $post_data['keywords'] = $keywords;

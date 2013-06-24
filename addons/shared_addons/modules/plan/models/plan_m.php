@@ -213,63 +213,21 @@ class Plan_m extends MY_Model {
 			$this->db->where_in('company_id', $data['company_id']);
 		}
                 
-                if (array_key_exists('plan_type_id', $data))
+        if (array_key_exists('plan_type_id', $data))
 		{
 			$this->db->where_in('plan_type_id', $data['plan_type_id']);
 		}
-                
-                /*
-                 * * USE LATER IF NEEDED
-                 *  
-		if (array_key_exists('status', $data))
+		
+		if (array_key_exists('zipcode', $data))
 		{
-			$this->db->where('status', $data['status']);
+			$this->db->where_in('zipcode', $data['zipcode']);
+		}
+		
+		if (array_key_exists('segment', $data))
+		{
+			$this->db->where_in('segment', $data['segment']);
 		}
 
-		
-                 
-                 if (array_key_exists('keywords', $data))
-		{
-			$matches = array();
-			if (strstr($data['keywords'], '%'))
-			{
-				preg_match_all('/%.*?%/i', $data['keywords'], $matches);
-			}
-
-			if (!empty($matches[0]))
-			{
-				foreach ($matches[0] as $match)
-				{
-					$phrases[] = str_replace('%', '', $match);
-				}
-			}
-			else
-			{
-				$temp_phrases = explode(' ', $data['keywords']);
-				foreach ($temp_phrases as $phrase)
-				{
-					$phrases[] = str_replace('%', '', $phrase);
-				}
-			}
-
-			$counter = 0;
-			foreach ($phrases as $phrase)
-			{
-				if ($counter == 0)
-				{
-					$this->db->like('blog.title', $phrase);
-				}
-				else
-				{
-					$this->db->or_like('blog.title', $phrase);
-				}
-
-				$this->db->or_like('blog.body', $phrase);
-				$this->db->or_like('blog.intro', $phrase);
-				$this->db->or_like('profiles.display_name', $phrase);
-				$counter++;
-			}
-		}*/
 		return $this->get_all();
 	}
 	
