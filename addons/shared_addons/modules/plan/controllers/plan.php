@@ -384,42 +384,50 @@ class plan extends Public_Controller
             $plan = $this->input->post('f_plan_type');
             $user_info = $this->session->userdata('user_info');
             $age_bracket = $this->session->userdata('age_bracket');
-            $segment = $this->session->userdata('segment');
-
+            $error_string = '';
+        
             $post_data = array();
 
-            if ( $plan != 0)
+            if ( valued($plan) )
             {
                 $post_data['plan_type_id'] = $plan;
             }
 
-            if ($company != 0)
+            if ( valued($company) )
             {
                 $post_data['company_id'] = $company;
             }
             
-            if ( valued($user_info['zipcode']))
+            if ( valued($user_info['zip_code']))
             {
-                $post_data['zipcode'] = $user_info['zipcode'];
+                $post_data['zipcode'] = $user_info['zip_code'];
             }
-
-            if ( valued($segment))
+			
+			if ( valued($user_info['birth_date']))
             {
-                $post_data['segment'] = $segment;
+                $post_data['age'] = date('Y') - date('Y', strtotime($user_info['birth_date']));
             }
-
-            //zipcode, lets explode them out if they exist
-            /*if ($keywords)
+            
+            if ( valued($user_info['gender']))
             {
-                $post_data['keywords'] = $keywords;
-            }*/
+                $post_data['gender'] = strtolower($user_info['gender']) == 'male' ? 0 : 1;
+            }
+			
+            if ( isset($user_info['segment']))
+            {
+                $post_data['segment'] = $user_info['segment'];
+            }
             
             $results = $this->plan_m->search($post_data);
-
+			if( count($results) == 0){
+				$error_string = 'No records found';
+			}
+			
             //set the layout to false and load the view
             $this->template
                 ->set_layout(FALSE)
                 ->set('rates', $results)
+                ->set('error_string',$error_string)
                 ->build('tables/plans');
         }
 	

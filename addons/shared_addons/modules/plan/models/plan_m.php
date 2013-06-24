@@ -37,7 +37,7 @@ class Plan_m extends MY_Model {
         }
         
         
-        function get_all()
+    function get_all()
 	{
 		$this->db->select('rates.*,
                         company.name AS company_name,
@@ -208,27 +208,47 @@ class Plan_m extends MY_Model {
 	 */
 	public function search($data = array())
 	{
+		$this->db->select('rates.*,
+                        company.name AS company_name,
+                        plan_type.name as plan_type_name')
+			->join('company', 'rates.company_id = company.id')
+			->join('plan_type', 'rates.plan_type_id = plan_type.id');
+
+		
 		if (array_key_exists('company_id', $data))
 		{
-			$this->db->where_in('company_id', $data['company_id']);
+			$this->db->where_in('rates.company_id', $data['company_id']);
 		}
                 
         if (array_key_exists('plan_type_id', $data))
 		{
-			$this->db->where_in('plan_type_id', $data['plan_type_id']);
+			$this->db->where_in('rates.plan_type_id', $data['plan_type_id']);
 		}
 		
 		if (array_key_exists('zipcode', $data))
 		{
-			$this->db->where_in('zipcode', $data['zipcode']);
+			$this->db->where('rates.zipcode', $data['zipcode']);
 		}
 		
 		if (array_key_exists('segment', $data))
 		{
-			$this->db->where_in('segment', $data['segment']);
+			$this->db->where('rates.segment', $data['segment']);
 		}
-
-		return $this->get_all();
+		
+		if (array_key_exists('age', $data))
+		{
+			$this->db->where('rates.age', $data['age']);
+		}
+		
+		if (array_key_exists('gender', $data))
+		{
+			$this->db->where('rates.gender', $data['gender']);
+		}
+		
+		$this->db->order_by('created_on', 'DESC');
+		
+		return $this->db->get('rates')->result();
+		//return $this->get_all();
 	}
 	
 }

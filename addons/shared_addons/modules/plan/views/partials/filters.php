@@ -11,7 +11,7 @@
         <div class="white-panel plan-selection">
             <h5>PLAN SELECTION:</h5>
             <?php foreach ($plan_list as $plan): ?>
-                <input type="checkbox" name="f_plan[]" id="f_plan" value="<?php echo $plan->id; ?>" text="<?php echo $plan->name; ?>" checked="checked" style="margin:10px" /><?php echo $plan->name; ?></br>
+                <input type="checkbox" name="f_plan_type[]" id="f_plan_type" value="<?php echo $plan->id; ?>" text="<?php echo $plan->name; ?>" checked="checked" style="margin:10px" /><?php echo $plan->name; ?></br>
             <?php endforeach; ?>
                 <button id="clear-all2" class="btn btn-small btn-primary">CLEAR ALL</button>
                 <button id="plan-f-only" class="btn btn-small btn-success plan-f-only">PLAN F ONLY</button>

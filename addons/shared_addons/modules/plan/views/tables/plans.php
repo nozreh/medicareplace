@@ -26,7 +26,13 @@ box-shadow:0 4px 12px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.5);
 
 }
 </style>
-
+<?php if ( ! empty($error_string)):?>
+<!-- Woops... -->
+<div class="alert alert-error">
+	<button type="button" class="close" data-dismiss="alert">×</button>
+	<?php echo $error_string;?>
+</div>
+<?php endif;?>
     <table>
 		<thead>
 			<tr>
@@ -51,7 +57,7 @@ box-shadow:0 4px 12px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.5);
 				<tr>
 					<td><?php //echo form_checkbox('action_to[]', $rate->id); ?></td>
 					<td><?php echo $rate->company_name; ?></td>
-					<td class="collapse"><?php echo $rate->plan_name; ?></td>
+					<td class="collapse"><?php echo $rate->plan_type_name; ?></td>
 					<td class="collapse"><?php echo format_date($rate->created_on); ?></td>
 					<td>$ <?php echo $rate->amount; ?></td>
 					<td>
