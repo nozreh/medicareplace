@@ -88,9 +88,10 @@ function upload_registration_entry( age_bracket, segment )
                     success: function(data) 
                             {
                                 data = jQuery.parseJSON(data);
-
+								console.log(data);
                                 if( data.result ) //zipcode found
                                 {
+                                     
                                     if(age_bracket == 1) {  
                                         window.location = '/plan/register?demographic=' + age_bracket; 
                                       

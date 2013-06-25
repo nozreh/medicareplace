@@ -14,8 +14,8 @@ class Module_Plan extends Module {
 				'en' => 'This module will provide the main features of the application for searching and quotation of plan'
 			),
 			'frontend' => TRUE,
-			'backend' => FALSE,
-			'menu' => 'content' // You can also place modules in their top level menu. For example try: 'menu' => 'Sample',
+			'backend' => TRUE,
+			'menu' => 'Plan Users' // You can also place modules in their top level menu. For example try: 'menu' => 'Sample',
 		);
 	}
 
@@ -65,8 +65,7 @@ class Module_Plan extends Module {
 		$selected_plan = "CREATE TABLE IF NOT EXISTS " . $this->db->dbprefix('selected_plan') ." (
 					  `id` int(11) NOT NULL AUTO_INCREMENT,
 					  `uid` int(11) NOT NULL,
-					  `plan_id` int(11) NOT NULL,
-                                          `company_id` int(11) NOT NULL,
+					  `rate_id` int(11) NOT NULL,
 					  `status` tinyint(2) NOT NULL DEFAULT '0',
 					  `created_on` int(11) NOT NULL,
                                           `updated_on` int(11) NOT NULL,
@@ -87,11 +86,11 @@ class Module_Plan extends Module {
 
 	public function uninstall()
 	{
-		$this->db->delete('widget_areas', array('slug' => 'zipcode-checker'));
+		/*$this->db->delete('widget_areas', array('slug' => 'zipcode-checker'));
 		$this->dbforge->drop_table('plan_users');
-                $this->dbforge->drop_table('plan_dependants');
+        $this->dbforge->drop_table('plan_dependants');
 		$this->dbforge->drop_table('selected_plan');
-		/**/
+		*/
 		return TRUE;
 	}
 
